@@ -24,6 +24,7 @@ struct PIDDataSet{
 extern PIDDataSet TestPara;
 
 extern void Zeroing(bool dist, bool HDG);
+extern void OdomZeroing(bool dist, bool HDG);
 extern ChassisDataSet ChassisUpdate();
 extern void Move(int left, int right);
 extern void BStop();
@@ -37,6 +38,5 @@ extern void MoveEncoderPID(PIDDataSet KVals, int Speed, double dist,double AccT,
 extern void TurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
 void MaxTimePIDTurnOneSide(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
 void MoveTimePID(PIDDataSet KVals, int Speed, double TE,double AccT,double ABSHDG, bool brake);
-
 
 #endif

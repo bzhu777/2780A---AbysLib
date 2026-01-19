@@ -23,9 +23,13 @@ digital_out Scraper = digital_out(Brain.ThreeWirePort.D);
 digital_out Redirect1 = digital_out(Brain.ThreeWirePort.B);
 digital_out Redirect2 = digital_out(Brain.ThreeWirePort.C);
 inertial Gyro = inertial(PORT5);
+encoder x_odom = encoder(Brain.ThreeWirePort.E);
+encoder y_odom = encoder(Brain.ThreeWirePort.F);
 //Naming convention: 
 // Important variables
 const double wheelDiam = 2.75;
+const double odomWheelDiam = 2.75;
+const double odomWheelToMotorRatio = 1.0;
 const double wheelToMotorRatio = 36.0/48;
 
 // VEXcode generated functions

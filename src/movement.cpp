@@ -44,6 +44,12 @@ void Zeroing(bool dist, bool HDG)
   }
 }
 
+void OdomZeroing(void)
+{
+  x_odom.setRotation(0,degrees);
+  y_odom.setRotation(0,degrees);
+}
+
 ChassisDataSet ChassisUpdate()
 {
   ChassisDataSet CDS;
