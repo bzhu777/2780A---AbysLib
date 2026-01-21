@@ -213,7 +213,7 @@ if(fabs(CSpeed)<fabs((double)Speed))
 void OdomMoveEncoderPID(PIDDataSet KVals, int Speed, double dist,double AccT, double ABSHDG,bool brake){
   Speed = Speed*-1;
   double CSpeed=0;
-  Zeroing(true,false);
+  OdomZeroing(true,false);
   OdomDataSet SensorVals;
   SensorVals=OdomUpdate();
   double PVal=0;
@@ -301,7 +301,7 @@ void TurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake){
  */
 void OdomTurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake){
   double CSpeed=0;
-  Zeroing(true,false);
+  OdomZeroing(true,false);
   OdomDataSet SensorVals;
   SensorVals=OdomUpdate();
   double PVal=0;
@@ -391,6 +391,45 @@ if(fabs(CSpeed)<fabs((double)Speed))
 }
 
   SensorVals=ChassisUpdate();
+    LGV=SensorVals.HDG-ABSHDG;
+  if(LGV>180) LGV=LGV-360;
+  PVal=KVals.kp*LGV;
+  IVal=IVal+KVals.ki*LGV*0.02;
+  DVal=KVals.kd*(LGV-PrevE);
+
+  Correction=PVal+IVal+DVal/0.02;
+
+  Move(-CSpeed-Correction,-CSpeed+Correction);
+  PrevE=LGV;
+  wait(20, msec);
+  }
+  if(brake){BStop();
+  wait(200,msec);}
+  else CStop();
+}
+
+
+void OdomMoveTimePID(PIDDataSet KVals, int Speed, double TE,double AccT,double ABSHDG, bool brake){
+  double CSpeed=0;
+  OdomZeroing(true,false);
+  OdomDataSet SensorVals;
+  SensorVals=OdomUpdate();
+  double PVal=0;
+  double IVal=0;
+  double DVal=0;
+  double LGV=0;
+  PrevE=0;
+  double Correction=0;
+  Brain.Timer.reset();
+
+  while(Brain.Timer.value() <= TE)
+  {
+if(fabs(CSpeed)<fabs((double)Speed))
+{
+  CSpeed+=Speed/AccT*0.02;
+}
+
+  SensorVals=OdomUpdate();
     LGV=SensorVals.HDG-ABSHDG;
   if(LGV>180) LGV=LGV-360;
   PVal=KVals.kp*LGV;

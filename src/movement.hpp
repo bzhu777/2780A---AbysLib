@@ -48,5 +48,6 @@ extern void OdomMoveEncoderPID(PIDDataSet KVals, int Speed, double dist,double A
 extern void OdomTurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
 void MaxTimePIDTurnOneSide(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
 void MoveTimePID(PIDDataSet KVals, int Speed, double TE,double AccT,double ABSHDG, bool brake);
+void OdomMoveTimePID(PIDDataSet KVals, int Speed, double TE,double AccT,double ABSHDG, bool brake);
 
 #endif
