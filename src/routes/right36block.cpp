@@ -8,6 +8,6 @@
 
 void right36block() { //right, long goal 6, mid goal 3
 
-    MoveEncoderPID(TestPara, 80, 15, 0.2, 0, false);
+    OdomMoveEncoderPID(TestPara, 80, 15, 0.2, 0, false);
 
 }
