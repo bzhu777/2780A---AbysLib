@@ -14,5 +14,6 @@ void right36block() { //right, long goal 6, mid goal 3
 
     OdomMoveEncoderPID(TestPara, 80, 15, 0.2, 0, false);
     OdomTurnMaxTimePID(TestPara, 90, 2.0, true);
+    OdomMoveTimePID(TestPara, 80, 1.5, 0.2, 90, false);
 
 }
