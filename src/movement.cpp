@@ -44,10 +44,15 @@ void Zeroing(bool dist, bool HDG)
   }
 }
 
-void OdomZeroing(void)
+void OdomZeroing(bool dist, bool HDG)
 {
-  left_odom.setRotation(0,degrees);
-  right_odom.setRotation(0,degrees);
+  if(dist){
+    left_odom.setRotation(0,degrees);
+    right_odom.setRotation(0,degrees);
+  }
+  if(HDG){
+    Gyro.setHeading(0,degrees);
+  }
 }
 
 ChassisDataSet ChassisUpdate()
