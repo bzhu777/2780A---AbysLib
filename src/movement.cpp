@@ -44,29 +44,11 @@ void Zeroing(bool dist, bool HDG)
   }
 }
 
-void OdomZeroing(void)
-{
-  left_odom.setRotation(0,degrees);
-  right_odom.setRotation(0,degrees);
-}
-
 ChassisDataSet ChassisUpdate()
 {
   ChassisDataSet CDS;
   CDS.Left=get_dist_travelled((LF.position(degrees)+LM.position(degrees)+LB.position(degrees))/3.0);
   CDS.Right=get_dist_travelled((RF.position(degrees)+RM.position(degrees)+RB.position(degrees))/3.0);
-  CDS.Avg=(CDS.Left+CDS.Right)/2;
-  CDS.Diff=CDS.Left-CDS.Right;
-  CDS.HDG=Gyro.heading(degrees);
-
-  return CDS;
-}
-
-OdomDataSet OdomUpdate()
-{
-  OdomDataSet CDS;
-  CDS.Left=get_Odom_dist_travelled((left_odom.position(degrees)));
-  CDS.Right=get_Odom_dist_travelled((right_odom.position(degrees)));
   CDS.Avg=(CDS.Left+CDS.Right)/2;
   CDS.Diff=CDS.Left-CDS.Right;
   CDS.HDG=Gyro.heading(degrees);
@@ -125,6 +107,9 @@ RM.stop();
 RB.stop();
 }
 
+
+
+
 void RunRoller(int val)
 {
 Intake1.setMaxTorque(100,percent);
@@ -161,6 +146,7 @@ int PrevE;//Error at t-1
  * @param brake Brake at end, or coast
  */
 void MoveEncoderPID(PIDDataSet KVals, int Speed, double dist,double AccT, double ABSHDG,bool brake){
+  Speed = Speed*-1;
   double CSpeed=0;
   Zeroing(true,false);
   ChassisDataSet SensorVals;
@@ -182,57 +168,6 @@ if(fabs(CSpeed)<fabs((double)Speed))
 }
 
   SensorVals=ChassisUpdate();
-  LGV=SensorVals.HDG-ABSHDG;
-  if(LGV>180) LGV=LGV-360;
-  PVal=KVals.kp*LGV;
-  IVal=IVal+KVals.ki*LGV*0.02;
-  DVal=KVals.kd*(LGV-PrevE);
-
-  Correction=PVal+IVal+DVal/0.02;
-
-  Move(CSpeed-Correction,CSpeed+Correction);
-  PrevE=LGV;
-  wait(20, msec);
-  }
-  if(brake){
-    BStop();
-    wait(120,msec);
-  }
-  else CStop();
-}
-
-/** Moves the robot forward or backward. Negative speed moves
- * the robot forward. Positive value moves it backward. (Ik it's fucked up)
- * @param KVals the PID constants
- * @param Speed the speed, from -100 to 100
- * @param dist distance travelled, in inches
- * @param AccT time to max speed (s)
- * @param ABSHDG absolute heading of the robot
- * @param brake Brake at end, or coast
- */
-void OdomMoveEncoderPID(PIDDataSet KVals, int Speed, double dist,double AccT, double ABSHDG,bool brake){
-  Speed = Speed*-1;
-  double CSpeed=0;
-  OdomZeroing(true,false);
-  OdomDataSet SensorVals;
-  SensorVals=OdomUpdate();
-  double PVal=0;
-  double IVal=0;
-  double DVal=0;
-  double LGV=0;//define local gyro variable.
-  PrevE=0;
-  double Correction=0;
-  Brain.Screen.clearScreen();
-
-  while(fabs(SensorVals.Avg) <= fabs(dist))
-  {
-    //std::cout << SensorVals.Avg << " " << dist << std::endl;
-if(fabs(CSpeed)<fabs((double)Speed))
-{
-  CSpeed+=Speed/AccT*0.02;
-}
-
-  SensorVals=OdomUpdate();
   LGV=SensorVals.HDG-ABSHDG;
   if(LGV>180) LGV=LGV-360;
   PVal=KVals.kp*LGV;
@@ -275,46 +210,6 @@ void TurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake){
   while(Brain.Timer.value() <= TE)
   {
   SensorVals=ChassisUpdate();
-  LGV=SensorVals.HDG-DeltaAngle;
-  if(LGV>180) LGV=LGV-360;
-  PVal=KVals.kp*LGV;
-  IVal=IVal+KVals.ki*LGV*0.02;
-  DVal=KVals.kd*(LGV-PrevE);
-
-  Correction=PVal+IVal+DVal/0.02;
-
-  Move(CSpeed-Correction,CSpeed+Correction);
-  PrevE=LGV;
-  wait(20, msec);
-  }
-  if(brake){BStop();
-  wait(180,msec);}
-  else CStop();
-}
-
-/** Moves the robot forward or backward. Negative speed moves
- * the robot forward. Positive value moves it backward. (Ik it's fucked up)
- * @param KVals the PID constants
- * @param DeltaAngle the absolute heading to turn to
- * @param TE time to calculate turn (not time to turn)
- * @param brake Brake at end, or coast
- */
-void OdomTurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake){
-  double CSpeed=0;
-  OdomZeroing(true,false);
-  OdomDataSet SensorVals;
-  SensorVals=OdomUpdate();
-  double PVal=0;
-  double IVal=0;
-  double DVal=0; 
-  double LGV=0;
-  PrevE=0;
-  double Correction=0;
-  Brain.Timer.reset();
-
-  while(Brain.Timer.value() <= TE)
-  {
-  SensorVals=OdomUpdate();
   LGV=SensorVals.HDG-DeltaAngle;
   if(LGV>180) LGV=LGV-360;
   PVal=KVals.kp*LGV;
@@ -391,45 +286,6 @@ if(fabs(CSpeed)<fabs((double)Speed))
 }
 
   SensorVals=ChassisUpdate();
-    LGV=SensorVals.HDG-ABSHDG;
-  if(LGV>180) LGV=LGV-360;
-  PVal=KVals.kp*LGV;
-  IVal=IVal+KVals.ki*LGV*0.02;
-  DVal=KVals.kd*(LGV-PrevE);
-
-  Correction=PVal+IVal+DVal/0.02;
-
-  Move(-CSpeed-Correction,-CSpeed+Correction);
-  PrevE=LGV;
-  wait(20, msec);
-  }
-  if(brake){BStop();
-  wait(200,msec);}
-  else CStop();
-}
-
-
-void OdomMoveTimePID(PIDDataSet KVals, int Speed, double TE,double AccT,double ABSHDG, bool brake){
-  double CSpeed=0;
-  OdomZeroing(true,false);
-  OdomDataSet SensorVals;
-  SensorVals=OdomUpdate();
-  double PVal=0;
-  double IVal=0;
-  double DVal=0;
-  double LGV=0;
-  PrevE=0;
-  double Correction=0;
-  Brain.Timer.reset();
-
-  while(Brain.Timer.value() <= TE)
-  {
-if(fabs(CSpeed)<fabs((double)Speed))
-{
-  CSpeed+=Speed/AccT*0.02;
-}
-
-  SensorVals=OdomUpdate();
     LGV=SensorVals.HDG-ABSHDG;
   if(LGV>180) LGV=LGV-360;
   PVal=KVals.kp*LGV;
