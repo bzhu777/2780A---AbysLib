@@ -6,6 +6,26 @@ extern int JB;
 extern int PB;
 extern int PX;
 extern int JX;
+extern double TrackingFront;
+extern double prevTrackingFront;
+extern double TrackingSide;
+extern double prevTrackingSide;
+extern double Xpos;
+extern double Ypos;
+extern double HDGpos;
+extern double prevXpos;
+extern double prevYpos;
+extern double prevHDGpos;
+
+struct OdomDataSet{
+  double CurrTrackingFront;
+  double CurrTrackingSide;
+};
+
+struct OdomDeltaSet{
+  double DeltaTrackingFront;
+  double DeltaTrackingSide;
+};
 
 struct ChassisDataSet{
   int Left;
@@ -24,7 +44,9 @@ struct PIDDataSet{
 extern PIDDataSet TestPara;
 
 extern void Zeroing(bool dist, bool HDG);
+extern void OdomZeroing(bool pos, bool HDG);
 extern ChassisDataSet ChassisUpdate();
+extern OdomDataSet OdomUpdate();
 extern void Move(int left, int right);
 extern void BStop();
 extern void CStop();

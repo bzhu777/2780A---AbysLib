@@ -17,6 +17,7 @@ int PX;
 int JX;
 PIDDataSet TestPara{3,0.1,0.2};
 
+
 //tune p value if robot is aggresively correcting itself
 
 
@@ -43,6 +44,37 @@ void Zeroing(bool dist, bool HDG)
     Gyro.setHeading(0,degrees);
   }
 }
+
+void OdomZeroing(bool pos, bool HDG)
+{
+  if(pos){
+    xOdom.resetRotation();
+    prevXpos=Xpos=0;
+    prevYpos=Ypos=0;
+  }
+  if(HDG){
+    yOdom.resetRotation();
+    HDGpos=prevHDGpos=0;
+    Gyro.setHeading(0,degrees);
+  }
+  OdomDataSet ODS = OdomUpdate();
+  if(pos){
+    prevTrackingFront=ODS.CurrTrackingFront;
+  }
+  if (HDG){
+    prevTrackingSide=ODS.CurrTrackingSide;
+  }
+}
+
+OdomDataSet OdomUpdate()
+{
+  OdomDataSet ODS;
+  ODS.CurrTrackingFront=get_odom_dist_travelled(xOdom.rotation(degrees));
+  ODS.CurrTrackingSide=get_odom_dist_travelled(yOdom.rotation(degrees));
+  return ODS;
+}
+
+
 
 ChassisDataSet ChassisUpdate()
 {

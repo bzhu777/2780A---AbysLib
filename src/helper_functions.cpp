@@ -12,3 +12,7 @@ double get_dist_travelled(double degreesTravelled) {
     std::cout << degreesTravelled * wheelToMotorRatio / 360 * (M_PI*wheelDiam) << std::endl;
     return fabs(degreesTravelled * wheelToMotorRatio / 360 * (M_PI*wheelDiam));
 }
+
+double get_odom_dist_travelled(double degreesTravelled) {
+    return degreesTravelled / 360 * (M_PI*OdomDiam);
+}
