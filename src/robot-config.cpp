@@ -23,6 +23,8 @@ digital_out Scraper = digital_out(Brain.ThreeWirePort.D);
 digital_out Redirect1 = digital_out(Brain.ThreeWirePort.B);
 digital_out Redirect2 = digital_out(Brain.ThreeWirePort.C);
 inertial Gyro = inertial(PORT5);
+rotation xOdom = rotation(PORT3);
+rotation yOdom = rotation(PORT4);
 //Naming convention: 
 // Important variables
 const double wheelDiam = 2.75;
