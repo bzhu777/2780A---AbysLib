@@ -101,6 +101,8 @@ void UpdatePos(void) {
   Ypos += dY;
   prevHDGpos = thetaDeg;
 
+  
+
   std::cout << "X: " << Xpos << " Y: " << Ypos << " HDG: " << thetaDeg << std::endl; // print x and y for testing
 }
 

@@ -279,6 +279,7 @@ if(AutoSelectorVal==7)//prog skills
   // Insert autonomous user code here.
   // ..........................................................................
 CStop();
+task odomScreenUpdate = task(OdomPosScreen);
 }
 
 int OdomTask()
@@ -299,7 +300,7 @@ int LV;
 int DriveTask(void){
   while(true)
   {
-    int DeadBand = 15;
+    int DeadBand = 5;
 
     EXIT=true;
     RV=-Controller1.Axis3.position(percent)+Controller1.Axis1.position(percent);

@@ -1,5 +1,6 @@
 #include "screen_gui.hpp"
 #include "vex.h"
+#include "movement.hpp"
 
 void DisplayAutoSelector(void)
 {
@@ -58,7 +59,7 @@ void DisplayWords(void)
     Brain.Screen.setCursor(11,40);
   Brain.Screen.print("SAWP");
 
-      Brain.Screen.setCursor(11,22);
+  Brain.Screen.setCursor(11,22);
   Brain.Screen.print("Skills");
 }
 
@@ -80,38 +81,38 @@ void UpdateDynamic(void)
   DisplayAutoSelector();
   DisplayWords();
   Brain.Screen.setFillColor("#84fffd");
-Brain.Screen.setPenColor(black);
+  Brain.Screen.setPenColor(black);
+
 if(AutoSelectorVal==1){
-Brain.Screen.drawRectangle(1,25,100,50);
+  Brain.Screen.drawRectangle(1,25,100,50);
   Brain.Screen.setCursor(3,3);
   Brain.Screen.print("Left 9");
 
-Brain.Screen.setFillColor(black);
-Brain.Screen.setFont(monoXL);
-Brain.Screen.setPenColor("#84fffd");
-Brain.Screen.setCursor(3,10);
-Brain.Screen.print("LEFT SIDE");
-Brain.Screen.setCursor(4,10);
-Brain.Screen.print("7 WING");
-Brain.Screen.setFont(monoM);
+  Brain.Screen.setFillColor(black);
+  Brain.Screen.setFont(monoXL);
+  Brain.Screen.setPenColor("#84fffd");
+  Brain.Screen.setCursor(3,10);
+  Brain.Screen.print("LEFT SIDE");
+  Brain.Screen.setCursor(4,10);
+  Brain.Screen.print("7 WING");
+  Brain.Screen.setFont(monoM);
   Brain.Screen.setFillColor("#84fffd");
 
 }
 
 if(AutoSelectorVal==2){
-Brain.Screen.drawRectangle(375,25,100,50);
-    Brain.Screen.setCursor(3,40);
+  Brain.Screen.drawRectangle(375,25,100,50);
+  Brain.Screen.setCursor(3,40);
   Brain.Screen.print("Right 9");
 
-Brain.Screen.setFillColor(black);
-
+  Brain.Screen.setFillColor(black);
   Brain.Screen.setFont(monoXL);
-Brain.Screen.setPenColor("#84fffd");
-Brain.Screen.setCursor(3,10);
-Brain.Screen.print("RIGHT SIDE");
-Brain.Screen.setCursor(4,10);
-Brain.Screen.print("9 BLOCK");
-Brain.Screen.setFont(monoM);
+  Brain.Screen.setPenColor("#84fffd");
+  Brain.Screen.setCursor(3,10);
+  Brain.Screen.print("RIGHT SIDE");
+  Brain.Screen.setCursor(4,10);
+  Brain.Screen.print("9 BLOCK");
+  Brain.Screen.setFont(monoM);
   Brain.Screen.setFillColor("#84fffd");
 }
 
@@ -188,16 +189,51 @@ if(AutoSelectorVal==7){
   Brain.Screen.setCursor(11,22);
   Brain.Screen.print("Skills");
 
-Brain.Screen.setFillColor(black);
-      Brain.Screen.setFont(monoXL);
-Brain.Screen.setPenColor("#84fffd");
-Brain.Screen.setCursor(3,10);
-Brain.Screen.print("SKILLS");
-Brain.Screen.setCursor(4,10);
-Brain.Screen.print("SKILLS");
-Brain.Screen.setFont(monoM); 
+  Brain.Screen.setFillColor(black);
+  Brain.Screen.setFont(monoXL);
+  Brain.Screen.setPenColor("#84fffd");
+  Brain.Screen.setCursor(3,10);
+  Brain.Screen.print("SKILLS");
+  Brain.Screen.setCursor(4,10);
+  Brain.Screen.print("SKILLS");
+  Brain.Screen.setFont(monoM); 
   Brain.Screen.setFillColor("#84fffd");
 
 }
 
+}
+
+int OdomPosScreen()
+{
+  while(true)
+  {
+    Brain.Screen.clearScreen();
+    Brain.Screen.setFont(monoM);
+    Brain.Screen.setCursor(1,2);
+    Brain.Screen.setPenColor("#84fffd");
+    Brain.Screen.print("X: %.2f in",Xpos);
+    Brain.Screen.setCursor(3,2);
+    Brain.Screen.setPenColor("#84fffd");
+    Brain.Screen.print("Y: %.2f in",Ypos);
+    Brain.Screen.setCursor(5,2);
+    Brain.Screen.setPenColor("#84fffd");
+    Brain.Screen.print("HDG: %.2f deg",Gyro.heading(degrees));
+
+    Brain.Screen.drawLine(6,1,6,20);
+
+    Brain.Screen.setCursor(8,1);
+    Brain.Screen.print("Battery Percent: %d %%",Brain.Battery.capacity(percent));
+    Brain.Screen.setCursor(10,1);
+    Brain.Screen.print("Battery Voltage: %.2f V",Brain.Battery.voltage());
+    Brain.Screen.setCursor(1,7);
+    double avgIntake = (Intake1.temperature(celsius)+Intake2.temperature(celsius))/2;
+    Brain.Screen.print("Intake Temp: %.2f C",avgIntake);
+    double avgDrive = (LF.temperature(celsius)+LM.temperature(celsius)+LB.temperature(celsius)+RF.temperature(celsius)+RM.temperature(celsius)+RB.temperature(celsius))/6;
+    Brain.Screen.setCursor(3,7);
+    Brain.Screen.print("Drive Temp: %.2f C",avgDrive);
+    Brain.Screen.setCursor(5,7);
+    
+
+  }
+  return 0;
 }
