@@ -9,6 +9,11 @@
 
 using namespace vex;
 
+// IMPORTANT!
+// +X is more to the side
+// +Y is forward
+// +HDG is clockwise
+
 int turninverse=-1;//change this to -1 if turning is inversed
 
 int JB;
@@ -71,26 +76,32 @@ void OdomZeroing() {
 
 void UpdatePos(void) {
   OdomDeltaSet movement = OdomGetDistTravelled();
-  double dF = movement.DeltaTrackingFront;
+  double dF = movement.DeltaTrackingFront; // stores some values from the sensor into local variables
   double dS = movement.DeltaTrackingSide;
-  double ThetaDeg = Gyro.heading(degrees);
-  double ThetaRad = ThetaDeg * M_PI / 180.0;
+  double thetaDeg = Gyro.heading(degrees);
 
-  dF -= OdomFrontOffset * ThetaRad;
-  dS -= OdomSideOffset  * ThetaRad;
+  double dThetaDeg = thetaDeg - prevHDGpos; // this is for the change in heading from 359 to 0
+  if (dThetaDeg > 180)  dThetaDeg -= 360; // hi percy
+  if (dThetaDeg < -180) dThetaDeg += 360;
+  double dThetaRad = dThetaDeg * M_PI / 180.0;
 
-  double ThetaMidRad =
-    (prevHDGpos + ThetaDeg / 2.0) * M_PI / 180.0;
+  dF -= OdomFrontOffset * dThetaRad; // offset correction
+  dS -= OdomSideOffset  * dThetaRad;
+
+  // average heading during the movement
+  double ThetaMidRad = (prevHDGpos + dThetaDeg / 2.0) * M_PI / 180.0;
 
   double dX = dS * cos(ThetaMidRad) - dF * sin(ThetaMidRad);
   double dY = dS * sin(ThetaMidRad) + dF * cos(ThetaMidRad);
   
-  Xpos += dX;
+  prevXpos = Xpos; // might be used later for velocity calculations
+  prevYpos = Ypos;
+
+  Xpos += dX; // update global position
   Ypos += dY;
+  prevHDGpos = thetaDeg;
 
-  prevHDGpos = ThetaDeg;
-
-  std::cout << "X: " << Xpos << " Y: " << Ypos << " HDG: " << ThetaDeg << std::endl;
+  std::cout << "X: " << Xpos << " Y: " << Ypos << " HDG: " << thetaDeg << std::endl; // print x and y for testing
 }
 
 OdomDataSet OdomUpdate()
