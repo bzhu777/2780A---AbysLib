@@ -34,6 +34,17 @@ competition Competition;
 
 bool SP;
 bool EXIT;
+
+int OdomTask()
+{
+  while(true)
+  {
+    UpdatePos();
+    wait(10,msec);
+  }
+  return 0;
+}
+
 void pre_auton(void) {
    EXIT= false; // change to "FALSE" for comp
   PX=0;
@@ -279,15 +290,7 @@ if(AutoSelectorVal==7)//prog skills
 CStop();
 }
 
-int OdomTask()
-{
-  while(true)
-  {
-    UpdatePos();
-    wait(10,msec);
-  }
-  return 0;
-}
+
 
 int RV;
 int LV;

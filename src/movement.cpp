@@ -24,6 +24,8 @@ double prevTrackingFront=0;
 double prevTrackingSide=0;
 double prevHDGpos=0;
 double ThetaDeg=0;
+double prevXpos=0;
+double prevYpos=0;
 
 PIDDataSet TestPara{3,0.1,0.2};
 
