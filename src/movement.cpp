@@ -76,10 +76,15 @@ void UpdatePos(void) {
   double ThetaDeg = Gyro.heading(degrees);
   double ThetaRad = ThetaDeg * M_PI / 180.0;
 
+  dF -= OdomFrontOffset * ThetaRad;
+  dS -= OdomSideOffset  * ThetaRad;
 
-  double dX=dS *cos(ThetaRad) - dF *sin(ThetaRad);
-  double dY=dS *sin(ThetaRad) + dF *cos(ThetaRad);
+  double ThetaMidRad =
+    (prevHDGpos + ThetaDeg / 2.0) * M_PI / 180.0;
 
+  double dX = dS * cos(ThetaMidRad) - dF * sin(ThetaMidRad);
+  double dY = dS * sin(ThetaMidRad) + dF * cos(ThetaMidRad);
+  
   Xpos += dX;
   Ypos += dY;
 

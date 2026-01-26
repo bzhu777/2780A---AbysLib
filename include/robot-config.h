@@ -21,9 +21,11 @@ extern rotation xOdom;
 extern rotation yOdom;
 
 extern const double wheelDiam;
-extern const double OdomDiam;
-
 extern const double wheelToMotorRatio;
+
+extern const double OdomDiam;
+extern const double OdomFrontOffset;
+extern const double OdomSideOffset;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

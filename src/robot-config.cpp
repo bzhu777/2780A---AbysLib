@@ -29,6 +29,8 @@ rotation yOdom = rotation(PORT4);
 // Important variables
 const double wheelDiam = 2.75;
 const double OdomDiam = 2.755; //odometry wheel diameter in inches
+const double OdomFrontOffset = 5.0; //distance from center of robot to front odometry wheel
+const double OdomSideOffset = 5.0; //distance from center of robot to
 
 const double wheelToMotorRatio = 36.0/48;
 
