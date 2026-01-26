@@ -66,6 +66,25 @@ void OdomZeroing(bool pos, bool HDG)
   }
 }
 
+void UpdatePos(void) {
+  OdomDeltaSet movement = OdomGetDistTravelled();
+  dF = movement.DeltaTrackingFront;
+  dS = movement.DeltaTrackingSide;
+  ThetaDeg = Gyro.heading(degrees);
+  ThetaRad = ThetaDeg * M_PI / 180.0;
+
+
+  dX=dS *cos(ThetaRad) - dF *sin(ThetaRad);
+  dY=dS *sin(ThetaRad) + dF *cos(ThetaRad);
+
+  Xpos += dX;
+  Ypos += dY;
+
+  prevHDGpos = ThetaDeg;
+
+  std::cout << "X: " << Xpos << " Y: " << Ypos << " HDG: " << ThetaDeg << std::endl;
+}
+
 OdomDataSet OdomUpdate()
 {
   OdomDataSet ODS;

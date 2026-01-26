@@ -6,6 +6,9 @@ extern int JB;
 extern int PB;
 extern int PX;
 extern int JX;
+
+//ODOM VARIABLES
+
 extern double TrackingFront;
 extern double prevTrackingFront;
 extern double TrackingSide;
@@ -16,6 +19,13 @@ extern double HDGpos;
 extern double prevXpos;
 extern double prevYpos;
 extern double prevHDGpos;
+
+extern double dF;
+extern double dS;
+extern double dX;
+extern double dY;
+extern double ThetaDeg;
+extern double ThetaRad;
 
 struct OdomDataSet{
   double CurrTrackingFront;
@@ -41,10 +51,17 @@ struct PIDDataSet{
   double kd;
 };
 
-extern PIDDataSet TestPara;
+//ODOM FUNCTIONS
 
-extern void Zeroing(bool dist, bool HDG);
 extern void OdomZeroing(bool pos, bool HDG);
+extern void UpdatePos(void);
+extern OdomDeltaSet OdomGetDistTravelled();
+extern OdomDataSet OdomUpdate();
+
+//PID FUNCTIONS
+
+extern PIDDataSet TestPara;
+extern void Zeroing(bool dist, bool HDG);
 extern ChassisDataSet ChassisUpdate();
 extern OdomDataSet OdomUpdate();
 extern void Move(int left, int right);
