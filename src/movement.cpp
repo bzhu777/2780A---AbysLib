@@ -69,9 +69,20 @@ void OdomZeroing(bool pos, bool HDG)
 OdomDataSet OdomUpdate()
 {
   OdomDataSet ODS;
-  ODS.CurrTrackingFront=get_odom_dist_travelled(xOdom.angle(degrees));
-  ODS.CurrTrackingSide=get_odom_dist_travelled(yOdom.angle(degrees));
+  ODS.CurrTrackingFront=get_odom_dist_travelled(xOdom.position(degrees));
+  ODS.CurrTrackingSide=get_odom_dist_travelled(yOdom.position(degrees));
   return ODS;
+}
+
+OdomDeltaSet OdomGetDistTravelled()
+{
+  OdomDataSet ODS=OdomUpdate();
+  OdomDeltaSet movement;
+  movement.DeltaTrackingFront=ODS.CurrTrackingFront-prevTrackingFront;
+  movement.DeltaTrackingSide=ODS.CurrTrackingSide-prevTrackingSide;
+  prevTrackingFront=ODS.CurrTrackingFront;
+  prevTrackingSide=ODS.CurrTrackingSide;
+  return movement;
 }
 
 ChassisDataSet ChassisUpdate()
