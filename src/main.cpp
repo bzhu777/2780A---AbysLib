@@ -67,6 +67,9 @@ waitUntil(!Gyro.isCalibrating());
 
 
 Zeroing(true,true);
+OdomZeroing(true,true);
+task odomTaskHandle = task(OdomTask);
+
 DisplayAutoSelector();
 DisplayWords();
 
@@ -160,9 +163,9 @@ Brain.Screen.setFillColor(black);
     Brain.Screen.setFont(monoXL);
 Brain.Screen.setPenColor("#84fffd");
 Brain.Screen.setCursor(3,10);
-Brain.Screen.print("LEFT");
+Brain.Screen.print("ODOM TEST");
 Brain.Screen.setCursor(4,10);
-Brain.Screen.print("Goal Clamp");
+Brain.Screen.print("POSITION UPDATE");
 Brain.Screen.setFont(monoM); 
   Brain.Screen.setFillColor("#84fffd");
 
@@ -252,7 +255,7 @@ if(AutoSelectorVal==4)// right, 6 long goal, 3 mid goal
 
 if(AutoSelectorVal==5)// empty
 {
-   //test();
+  odomtest();
 }
 
 
@@ -275,8 +278,20 @@ if(AutoSelectorVal==7)//prog skills
   // ..........................................................................
 CStop();
 }
+
+int OdomTask()
+{
+  while(true)
+  {
+    UpdatePos();
+    wait(10,msec);
+  }
+  return 0;
+}
+
 int RV;
 int LV;
+
 
 //------------------------------------------------------------------------ SPLIT ARCADE DRIVE
 int DriveTask(void){

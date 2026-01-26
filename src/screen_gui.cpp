@@ -47,7 +47,7 @@ void DisplayWords(void)
   Brain.Screen.print("Left34");
 
     Brain.Screen.setCursor(11,3);
-  Brain.Screen.print("GOAL CLAMP");
+  Brain.Screen.print("ODOM TEST");
 
     Brain.Screen.setCursor(3,40);
   Brain.Screen.print("Right 9");
@@ -159,9 +159,9 @@ Brain.Screen.setFillColor(black);
     Brain.Screen.setFont(monoXL);
 Brain.Screen.setPenColor("#84fffd");
 Brain.Screen.setCursor(3,10);
-Brain.Screen.print("LEFT SIDE");
+Brain.Screen.print("ODOM TEST");
 Brain.Screen.setCursor(4,10);
-Brain.Screen.print("GOAL CLAMP");
+Brain.Screen.print("POSITION UPDATE");
 Brain.Screen.setFont(monoM); 
   Brain.Screen.setFillColor("#84fffd");
 

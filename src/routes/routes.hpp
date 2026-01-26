@@ -13,5 +13,6 @@ extern void right36block();
 
 extern void SoloAWP();
 extern void progskills();
+extern void odomtest();
 
 #endif

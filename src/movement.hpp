@@ -15,17 +15,10 @@ extern double TrackingSide;
 extern double prevTrackingSide;
 extern double Xpos;
 extern double Ypos;
-extern double HDGpos;
+extern double ThetaDeg;
 extern double prevXpos;
 extern double prevYpos;
 extern double prevHDGpos;
-
-extern double dF;
-extern double dS;
-extern double dX;
-extern double dY;
-extern double ThetaDeg;
-extern double ThetaRad;
 
 struct OdomDataSet{
   double CurrTrackingFront;

@@ -15,6 +15,16 @@ int JB;
 int PB;
 int PX;
 int JX;
+
+//ODOM VARIABLES
+
+double Xpos=0;
+double Ypos=0;
+double prevTrackingFront=0;
+double prevTrackingSide=0;
+double prevHDGpos=0;
+double ThetaDeg=0;
+
 PIDDataSet TestPara{3,0.1,0.2};
 
 
@@ -54,7 +64,7 @@ void OdomZeroing(bool pos, bool HDG)
   }
   if(HDG){
     yOdom.resetPosition();
-    HDGpos=prevHDGpos=0;
+    prevHDGpos=ThetaDeg=0;
     Gyro.setHeading(0,degrees);
   }
   OdomDataSet ODS = OdomUpdate();
@@ -68,14 +78,14 @@ void OdomZeroing(bool pos, bool HDG)
 
 void UpdatePos(void) {
   OdomDeltaSet movement = OdomGetDistTravelled();
-  dF = movement.DeltaTrackingFront;
-  dS = movement.DeltaTrackingSide;
-  ThetaDeg = Gyro.heading(degrees);
-  ThetaRad = ThetaDeg * M_PI / 180.0;
+  double dF = movement.DeltaTrackingFront;
+  double dS = movement.DeltaTrackingSide;
+  double ThetaDeg = Gyro.heading(degrees);
+  double ThetaRad = ThetaDeg * M_PI / 180.0;
 
 
-  dX=dS *cos(ThetaRad) - dF *sin(ThetaRad);
-  dY=dS *sin(ThetaRad) + dF *cos(ThetaRad);
+  double dX=dS *cos(ThetaRad) - dF *sin(ThetaRad);
+  double dY=dS *sin(ThetaRad) + dF *cos(ThetaRad);
 
   Xpos += dX;
   Ypos += dY;
