@@ -57,25 +57,16 @@ void Zeroing(bool dist, bool HDG)
   }
 }
 
-void OdomZeroing(bool pos, bool HDG)
-{
-  if(pos){
-    xOdom.resetPosition();
-    prevXpos=Xpos=0;
-    prevYpos=Ypos=0;
-  }
-  if(HDG){
-    yOdom.resetPosition();
-    prevHDGpos=ThetaDeg=0;
-    Gyro.setHeading(0,degrees);
-  }
+void OdomZeroing() {
+  xOdom.resetPosition();
+  yOdom.resetPosition();
+  Xpos = Ypos = 0;
+  prevHDGpos = 0;
+  Gyro.setHeading(0, degrees);
+
   OdomDataSet ODS = OdomUpdate();
-  if(pos){
-    prevTrackingFront=ODS.CurrTrackingFront;
-  }
-  if (HDG){
-    prevTrackingSide=ODS.CurrTrackingSide;
-  }
+  prevTrackingFront = ODS.CurrTrackingFront;
+  prevTrackingSide  = ODS.CurrTrackingSide;
 }
 
 void UpdatePos(void) {

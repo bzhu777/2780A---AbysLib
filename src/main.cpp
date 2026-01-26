@@ -34,16 +34,7 @@ competition Competition;
 
 bool SP;
 bool EXIT;
-
-int OdomTask()
-{
-  while(true)
-  {
-    UpdatePos();
-    wait(10,msec);
-  }
-  return 0;
-}
+int OdomTask();
 
 void pre_auton(void) {
    EXIT= false; // change to "FALSE" for comp
@@ -78,7 +69,7 @@ waitUntil(!Gyro.isCalibrating());
 
 
 Zeroing(true,true);
-OdomZeroing(true,true);
+OdomZeroing();
 task odomTaskHandle = task(OdomTask);
 
 DisplayAutoSelector();
@@ -290,7 +281,15 @@ if(AutoSelectorVal==7)//prog skills
 CStop();
 }
 
-
+int OdomTask()
+{
+  while(true)
+  {
+    UpdatePos();
+    wait(10,msec);
+  }
+  return 0;
+}
 
 int RV;
 int LV;

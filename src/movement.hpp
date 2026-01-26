@@ -46,7 +46,7 @@ struct PIDDataSet{
 
 //ODOM FUNCTIONS
 
-extern void OdomZeroing(bool pos, bool HDG);
+extern void OdomZeroing(void);
 extern void UpdatePos(void);
 extern OdomDeltaSet OdomGetDistTravelled();
 extern OdomDataSet OdomUpdate();
