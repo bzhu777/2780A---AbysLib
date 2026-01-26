@@ -220,6 +220,8 @@ int OdomPosScreen()
     Brain.Screen.print("HDG: %.2f deg",Gyro.heading(degrees));
 
     Brain.Screen.drawLine(6,1,6,20);
+    Brain.Screen.drawLine(1,15,5,15);
+    Brain.Screen.drawLine(1,30,5,30);
 
     Brain.Screen.setCursor(8,1);
     Brain.Screen.print("Battery Percent: %d %%",Brain.Battery.capacity(percent));
