@@ -78,11 +78,15 @@ void UpdatePos(void) {
   OdomDeltaSet movement = OdomGetDistTravelled();
   double dF = movement.DeltaTrackingFront; // stores some values from the sensor into local variables
   double dS = movement.DeltaTrackingSide;
-  double thetaDeg = Gyro.heading(degrees);
+  double HDG = Gyro.heading(degrees);
 
-  double dThetaDeg = thetaDeg - prevHDGpos; // this is for the change in heading from 359 to 0
-  if (dThetaDeg > 180)  dThetaDeg -= 360; // hi percy
+  double dThetaDeg = HDG - prevHDGpos; // this is bascially how much the robot turned since last update
+
+  // this is for the change in heading from 359 to 0
+  if (dThetaDeg > 180)  dThetaDeg -= 360; 
   if (dThetaDeg < -180) dThetaDeg += 360;
+
+  //convert to radians
   double dThetaRad = dThetaDeg * M_PI / 180.0;
 
   dF -= OdomFrontOffset * dThetaRad; // offset correction
@@ -94,16 +98,12 @@ void UpdatePos(void) {
   double dX = dS * cos(ThetaMidRad) - dF * sin(ThetaMidRad);
   double dY = dS * sin(ThetaMidRad) + dF * cos(ThetaMidRad);
   
-  prevXpos = Xpos; // might be used later for velocity calculations
-  prevYpos = Ypos;
 
   Xpos += dX; // update global position
   Ypos += dY;
-  prevHDGpos = thetaDeg;
+  prevHDGpos = HDG;
 
-  
-
-  std::cout << "X: " << Xpos << " Y: " << Ypos << " HDG: " << thetaDeg << std::endl; // print x and y for testing
+  std::cout << "X: " << Xpos << " Y: " << Ypos << " HDG: " << HDG << std::endl; // print x and y for testing
 }
 
 OdomDataSet OdomUpdate()

@@ -16,8 +16,6 @@ extern double prevTrackingSide;
 extern double Xpos;
 extern double Ypos;
 extern double ThetaDeg;
-extern double prevXpos;
-extern double prevYpos;
 extern double prevHDGpos;
 
 struct OdomDataSet{
