@@ -78,13 +78,9 @@ void UpdatePos(void) {
   OdomDeltaSet movement = OdomGetDistTravelled();
   double dF = movement.DeltaTrackingFront; // stores some values from the sensor into local variables
   double dS = movement.DeltaTrackingSide;
-  double HDG = Gyro.heading(degrees);
+  double HDG = Gyro.rotation(degrees);
 
   double dThetaDeg = HDG - prevHDGpos; // this is bascially how much the robot turned since last update
-
-  // this is for the change in heading from 359 to 0
-  if (dThetaDeg > 180)  dThetaDeg -= 360; 
-  if (dThetaDeg < -180) dThetaDeg += 360;
 
   //convert to radians
   double dThetaRad = dThetaDeg * M_PI / 180.0;
