@@ -74,6 +74,19 @@ void OdomZeroing() {
   prevTrackingSide  = ODS.CurrTrackingSide;
 }
 
+void SetPos(double X, double Y, double HDG)
+{
+  xOdom.resetPosition();
+  yOdom.resetPosition();
+  Gyro.setRotation(HDG, degrees);
+  ThetaDeg = HDG;
+  Xpos=X;
+  Ypos=Y;
+  prevHDGpos=HDG;
+  OdomDataSet ODS = OdomUpdate();
+  UpdatePos();
+}
+
 void UpdatePos(void) {
   OdomDeltaSet movement = OdomGetDistTravelled();
   double dF = movement.DeltaTrackingFront; // stores some values from the sensor into local variables
