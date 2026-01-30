@@ -150,6 +150,23 @@ RM.spin(forward,(double)right/100.0*11,volt);
 RB.spin(forward,(double)right/100.0*11,volt);
 }
 
+void SlowMove(int left, int right, int speed)
+{
+LF.setMaxTorque(speed,percent);
+LM.setMaxTorque(speed,percent);
+LB.setMaxTorque(speed,percent);
+RF.setMaxTorque(speed,percent);
+RM.setMaxTorque(speed,percent);
+RB.setMaxTorque(speed,percent);
+
+LF.spin(forward,(double)left/100.0*11,volt);
+LM.spin(forward,(double)left/100.0*11,volt);
+LB.spin(forward,(double)left/100.0*11,volt);
+RF.spin(forward,(double)right/100.0*11,volt);
+RM.spin(forward,(double)right/100.0*11,volt);
+RB.spin(forward,(double)right/100.0*11,volt);
+}
+
 void BStop()
 {
 LF.setStopping(brake);
@@ -296,6 +313,46 @@ void TurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake){
   Correction=PVal+IVal+DVal/0.02;
 
   Move(CSpeed-Correction,CSpeed+Correction);
+  PrevE=LGV;
+  wait(20, msec);
+  }
+  if(brake){BStop();
+  wait(180,msec);}
+  else CStop();
+}
+
+/** Moves the robot forward or backward. Negative speed moves
+ * the robot forward. Positive value moves it backward. (Ik it's fucked up)
+ * @param KVals the PID constants
+ * @param DeltaAngle the absolute heading to turn to
+ * @param TE time to calculate turn (not time to turn)
+ * @param brake Brake at end, or coast
+ */
+void SpeedTurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, double Speed, bool brake){
+  double CSpeed=0;
+  Zeroing(true,false);
+  ChassisDataSet SensorVals;
+  SensorVals=ChassisUpdate();
+  double PVal=0;
+  double IVal=0;
+  double DVal=0; 
+  double LGV=0;
+  PrevE=0;
+  double Correction=0;
+  Brain.Timer.reset();
+
+  while(Brain.Timer.value() <= TE)
+  {
+  SensorVals=ChassisUpdate();
+  LGV=SensorVals.HDG-DeltaAngle;
+  if(LGV>180) LGV=LGV-360;
+  PVal=KVals.kp*LGV;
+  IVal=IVal+KVals.ki*LGV*0.02;
+  DVal=KVals.kd*(LGV-PrevE);
+
+  Correction=PVal+IVal+DVal/0.02;
+
+  SlowMove(CSpeed-Correction,CSpeed+Correction, Speed);
   PrevE=LGV;
   wait(20, msec);
   }

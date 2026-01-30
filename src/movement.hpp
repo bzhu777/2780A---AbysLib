@@ -56,6 +56,7 @@ extern void Zeroing(bool dist, bool HDG);
 extern ChassisDataSet ChassisUpdate();
 extern OdomDataSet OdomUpdate();
 extern void Move(int left, int right);
+extern void SlowMove(int left, int right, int speed);
 extern void BStop();
 extern void CStop();
 extern void RunRoller(int val);
@@ -65,6 +66,7 @@ extern void NeutralScore();
 extern int PrevE;
 extern void MoveEncoderPID(PIDDataSet KVals, int Speed, double dist,double AccT, double ABSHDG,bool brake);
 extern void TurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
+extern void SpeedTurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, double Speed, bool brake);
 void MaxTimePIDTurnOneSide(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
 void MoveTimePID(PIDDataSet KVals, int Speed, double TE,double AccT,double ABSHDG, bool brake);
 
