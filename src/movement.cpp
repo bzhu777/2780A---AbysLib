@@ -83,7 +83,6 @@ void SetPos(double X, double Y, double HDG)
   Xpos=X;
   Ypos=Y;
   prevHDGpos=HDG;
-  OdomDataSet ODS = OdomUpdate();
   UpdatePos();
 }
 
