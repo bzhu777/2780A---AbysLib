@@ -29,8 +29,6 @@ double prevTrackingFront=0;
 double prevTrackingSide=0;
 double prevHDGpos=0;
 double ThetaDeg=0;
-double prevXpos=0;
-double prevYpos=0;
 
 PIDDataSet TestPara{3,0.1,0.2};
 
@@ -63,28 +61,29 @@ void Zeroing(bool dist, bool HDG)
 }
 
 void OdomZeroing() {
-  xOdom.resetPosition();
-  yOdom.resetPosition();
-  Xpos = Ypos = 0;
-  prevHDGpos = 0;
-  Gyro.setHeading(0, degrees);
-
-  OdomDataSet ODS = OdomUpdate();
-  prevTrackingFront = ODS.CurrTrackingFront;
-  prevTrackingSide  = ODS.CurrTrackingSide;
+  SetPos(0,0,0);
 }
 
 void SetPos(double X, double Y, double HDG)
 {
-  xOdom.resetPosition();
-  yOdom.resetPosition();
-  Gyro.setRotation(HDG, degrees);
-  ThetaDeg = HDG;
+  odomUpdate=false;
   Xpos=X;
   Ypos=Y;
-  prevHDGpos=HDG;
-  UpdatePos();
+  Gyro.setRotation(HDG, degrees);
+  prevHDGpos = HDG;
+  xOdom.resetPosition();
+  yOdom.resetPosition();
+  OdomDataSet ODS = OdomUpdate();
+  prevTrackingFront = ODS.CurrTrackingFront;
+  prevTrackingSide  = ODS.CurrTrackingSide;
+  odomUpdate=true;
 }
+
+double getGyroDeg()
+{
+  return Gyro.rotation(degrees);
+}
+
 
 void UpdatePos(void) {
   OdomDeltaSet movement = OdomGetDistTravelled();

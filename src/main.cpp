@@ -34,6 +34,7 @@ competition Competition;
 
 bool SP;
 bool EXIT;
+bool odomUpdate;
 int OdomTask();
 
 void pre_auton(void) {
@@ -41,6 +42,7 @@ void pre_auton(void) {
   PX=0;
   JX=0;
   AutoSelectorVal=0; // change to 0 for comp
+  odomUpdate=true;
   SP=false;
   Scraper.set(false);
   Wing.set(false);
@@ -286,7 +288,10 @@ int OdomTask()
 {
   while(true)
   {
-    UpdatePos();
+    if (odomUpdate==true)
+    {
+      UpdatePos();
+    }
     wait(10,msec);
   }
   return 0;

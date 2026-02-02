@@ -3,5 +3,6 @@
 
 extern double get_dist_travelled(double degreesTravelled);
 extern double get_odom_dist_travelled(double degreesTravelled);
+extern bool odomUpdate;
 
 #endif
