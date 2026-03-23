@@ -281,7 +281,6 @@ if(AutoSelectorVal==7)//prog skills
   // Insert autonomous user code here.
   // ..........................................................................
 CStop();
-task odomScreenUpdate = task(OdomPosScreen);
 }
 
 int OdomTask()
@@ -340,7 +339,7 @@ int ATask(void)
     }
     else if (Controller1.ButtonL1.pressing()==1) 
     {
-      RunRoller(100);
+      RunRoller(50);
       NeutralScore();
     }
     else if (Controller1.ButtonUp.pressing()==1)
@@ -419,10 +418,11 @@ void usercontrol(void) {
     // values based on feedback from the joysticks.
     
     
-    
     task Dtask=task(DriveTask);
     task Atask=task(ATask);
     task Ptask=task(PTask);
+    task Otask=task(OdomPosScreen);
+    
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.

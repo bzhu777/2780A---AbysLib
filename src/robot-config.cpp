@@ -9,18 +9,18 @@ brain  Brain;
 
 // VEXcode device constructors
 controller Controller1 = controller(primary);
-motor LF = motor(PORT20, ratio6_1, false);
-motor LM = motor(PORT2, ratio6_1, false);
-motor LB = motor(PORT1, ratio6_1, false);
-motor RF = motor(PORT11, ratio6_1, true);
-motor RM = motor(PORT12, ratio6_1, true);
-motor RB = motor(PORT13, ratio6_1, true);
-motor Intake1 = motor(PORT10, ratio6_1, true);
+motor LF = motor(PORT11, ratio6_1, false);
+motor LM = motor(PORT12, ratio6_1, false);
+motor LB = motor(PORT13, ratio6_1, false);
+motor RF = motor(PORT20, ratio6_1, true);
+motor RM = motor(PORT19, ratio6_1, true);
+motor RB = motor(PORT18, ratio6_1, true);
+motor Intake1 = motor(PORT1, ratio6_1, true);
 motor Intake2 = motor(PORT21, ratio6_1, false);
 
 digital_out Wing = digital_out(Brain.ThreeWirePort.A);
-digital_out Scraper = digital_out(Brain.ThreeWirePort.D);
-digital_out Redirect1 = digital_out(Brain.ThreeWirePort.B);
+digital_out Scraper = digital_out(Brain.ThreeWirePort.B);
+digital_out Redirect1 = digital_out(Brain.ThreeWirePort.D);
 digital_out Redirect2 = digital_out(Brain.ThreeWirePort.C);
 inertial Gyro = inertial(PORT5);
 rotation xOdom = rotation(PORT3);

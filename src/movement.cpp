@@ -84,7 +84,6 @@ double getGyroDeg()
   return Gyro.rotation(degrees);
 }
 
-
 void UpdatePos(void) {
   OdomDeltaSet movement = OdomGetDistTravelled();
   double dF = movement.DeltaTrackingFront; // stores some values from the sensor into local variables
@@ -131,6 +130,30 @@ OdomDeltaSet OdomGetDistTravelled()
   prevTrackingSide=ODS.CurrTrackingSide;
   return movement;
 }
+
+void TurnToAnglePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake){
+  double CSpeed=0;
+
+  double PVal=0;
+  double IVal=0;
+  double DVal=0; 
+  double LGV=0;
+  PrevE=0;
+  double Correction=0;
+  Brain.Timer.reset();
+
+  while(Brain.Timer.value() <= TE)
+  {
+  
+  wait(20, msec);
+  }
+  if(brake){BStop();
+  wait(180,msec);}
+  else CStop();
+}
+
+//--------------------------------------------------------------------------PID FUNCTIONS
+
 
 ChassisDataSet ChassisUpdate()
 {

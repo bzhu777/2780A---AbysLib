@@ -212,67 +212,66 @@ int OdomPosScreen()
   Brain.Screen.drawLine(2,30,10,30);
 
   //Brain.Screen.setCursor(row, col);
-  while(true)
-  {
-    Brain.Screen.setFont(monoM);
-    Brain.Screen.setCursor(1,2);
+    Brain.Screen.setFont(monoS);
+    Brain.Screen.setCursor(1,1);
     Brain.Screen.setPenColor("#84fffd");
     Brain.Screen.print("X: %.2f in",Xpos);
-    Brain.Screen.setCursor(3,2);
+    Brain.Screen.setCursor(2,1);
     Brain.Screen.setPenColor("#84fffd");
     Brain.Screen.print("Y: %.2f in",Ypos);
-    Brain.Screen.setCursor(5,2);
+    Brain.Screen.setCursor(3,1);
     Brain.Screen.setPenColor("#84fffd");
     Brain.Screen.print("HDG: %.2f deg",Gyro.heading(degrees));
 
     Brain.Screen.setPenColor("#84fffd");
-    Brain.Screen.setCursor(1,17);
+    Brain.Screen.setCursor(1,20);
     Brain.Screen.print("Battery Percent: %d %%",Brain.Battery.capacity(percent));
-    Brain.Screen.setCursor(3,17);
+    Brain.Screen.setCursor(2,20);
     Brain.Screen.print("Battery Voltage: %.2f V",Brain.Battery.voltage());
-    Brain.Screen.setCursor(5,17);
+    Brain.Screen.setCursor(3,20);
     double avgIntake = (Intake1.temperature(celsius)+Intake2.temperature(celsius))/2;
     Brain.Screen.print("Intake Temp: %.2f C",avgIntake);
     double avgDrive = (LF.temperature(celsius)+LM.temperature(celsius)+LB.temperature(celsius)+RF.temperature(celsius)+RM.temperature(celsius)+RB.temperature(celsius))/6;
-    Brain.Screen.setCursor(7,17);
+    Brain.Screen.setCursor(4,20);
     Brain.Screen.print("Drive Temp: %.2f C",avgDrive);
 
     Brain.Screen.setPenColor("#84fffd");
-    Brain.Screen.setCursor(1,32);
+    Brain.Screen.setCursor(7,1);
     if (LF.installed())
       Brain.Screen.print("LF: Connected");
     else
       Brain.Screen.print("LF: Not Connected");
     
-    Brain.Screen.setCursor(3,32);
+    Brain.Screen.setCursor(8,1);
     if (LM.installed())
       Brain.Screen.print("LM: Connected");
     else
       Brain.Screen.print("LM: Not Connected");
 
-    Brain.Screen.setCursor(5,32);
+    Brain.Screen.setCursor(9,1);
     if (LB.installed())
       Brain.Screen.print("LB: Connected");
     else
       Brain.Screen.print("LB: Not Connected");
 
-    Brain.Screen.setCursor(7,32);
+    Brain.Screen.setCursor(10,1);
     if (RF.installed())
       Brain.Screen.print("RF: Connected");
     else
       Brain.Screen.print("RF: Not Connected");
 
-    Brain.Screen.setCursor(9,32);
+    Brain.Screen.setCursor(11,1);
     if (RM.installed())
       Brain.Screen.print("RM: Connected");
     else
       Brain.Screen.print("RM: Not Connected");
 
-    Brain.Screen.setCursor(11,32);
+    Brain.Screen.setCursor(12,1);
     if (RB.installed())
       Brain.Screen.print("RB: Connected");
     else
       Brain.Screen.print("RB: Not Connected");
-  }
+    
+    
   return 0;
 }
