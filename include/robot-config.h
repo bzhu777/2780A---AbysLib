@@ -14,7 +14,7 @@ extern motor Intake1;
 extern motor Intake2;
 extern digital_out Wing;
 extern digital_out Redirect1;
-extern digital_out Redirect2;
+extern digital_out Storing;
 extern digital_out Scraper;
 extern inertial Gyro;
 extern rotation xOdom;

@@ -326,7 +326,8 @@ int ATask(void)
   if (Controller1.ButtonR2.pressing()==1)
     {
       RunRoller(100);
-      MiddleScore();
+      Redirect1.set(false);
+      Storing.set(false);
     }
     else if (Controller1.ButtonL2.pressing()==1)
     {
@@ -334,18 +335,19 @@ int ATask(void)
     }
     else if (Controller1.ButtonR1.pressing()==1)
     {
-      RunRoller(100); 
-      HighScore();
+      RunRoller(100);
+      Redirect1.set(true);
+      Storing.set(false);
     }
     else if (Controller1.ButtonL1.pressing()==1) 
     {
-      RunRoller(50);
-      NeutralScore();
+      RunRoller(100);
+      Storing.set(true);
     }
     else if (Controller1.ButtonUp.pressing()==1)
     {
       RunRoller(50);
-      MiddleScore();
+      Storing.set(false);
     }
     else
     {
@@ -421,7 +423,6 @@ void usercontrol(void) {
     task Dtask=task(DriveTask);
     task Atask=task(ATask);
     task Ptask=task(PTask);
-    task Otask=task(OdomPosScreen);
     
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to

@@ -6,6 +6,5 @@ extern int AutoSelectorVal;
 extern void DisplayAutoSelector();
 extern void DisplayWords();
 extern void UpdateDynamic();
-extern int OdomPosScreen();
 
 #endif

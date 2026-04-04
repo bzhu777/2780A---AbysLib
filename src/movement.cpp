@@ -249,17 +249,14 @@ Intake2.spin(forward,(double)val/100.0*12, volt);
 void MiddleScore()
 {
   Redirect1.set(false);
-  Redirect2.set(true);
 }
 void NeutralScore()
 {
   Redirect1.set(false);
-  Redirect2.set(false);
 }
 void HighScore()
 {
   Redirect1.set(true);
-  Redirect2.set(false);
 }
 
 int PrevE;//Error at t-1

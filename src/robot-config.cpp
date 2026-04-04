@@ -18,10 +18,10 @@ motor RB = motor(PORT18, ratio6_1, true);
 motor Intake1 = motor(PORT1, ratio6_1, true);
 motor Intake2 = motor(PORT21, ratio6_1, false);
 
-digital_out Wing = digital_out(Brain.ThreeWirePort.A);
+digital_out Wing = digital_out(Brain.ThreeWirePort.D);
 digital_out Scraper = digital_out(Brain.ThreeWirePort.B);
-digital_out Redirect1 = digital_out(Brain.ThreeWirePort.D);
-digital_out Redirect2 = digital_out(Brain.ThreeWirePort.C);
+digital_out Redirect1 = digital_out(Brain.ThreeWirePort.C);
+digital_out Storing = digital_out(Brain.ThreeWirePort.A);
 inertial Gyro = inertial(PORT5);
 rotation xOdom = rotation(PORT3);
 rotation yOdom = rotation(PORT4);
