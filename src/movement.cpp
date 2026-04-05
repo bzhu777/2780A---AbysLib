@@ -42,8 +42,8 @@ PIDDataSet TestPara{3,0.1,0.2};
 
 /** Resets the robot's drive train and inertial sensor
  * 
- * @param dist the 
- * @param HDG the
+ * @param dist the distance on the motor encoders
+ * @param HDG the heading on the gyro
  */
 void Zeroing(bool dist, bool HDG)
 {
@@ -60,10 +60,16 @@ void Zeroing(bool dist, bool HDG)
   }
 }
 
+/** Sets the position to 0 */
 void OdomZeroing() {
   SetPos(0,0,0);
 }
 
+/** Sets the position
+ * @param X the wanted x position to set to
+ * @param Y the wanted y position to set to
+ * @param HDG the wanted heading to set to
+ */
 void SetPos(double X, double Y, double HDG)
 {
   odomUpdate=false;
@@ -79,6 +85,7 @@ void SetPos(double X, double Y, double HDG)
   odomUpdate=true;
 }
 
+/* gets the gyro rotation in degrees */
 double getGyroDeg()
 {
   return Gyro.rotation(degrees);
@@ -124,33 +131,32 @@ OdomDeltaSet OdomGetDistTravelled()
 {
   OdomDataSet ODS=OdomUpdate();
   OdomDeltaSet movement;
-  movement.DeltaTrackingFront=ODS.CurrTrackingFront-prevTrackingFront;
+  ChassisDataSet CDS;
   movement.DeltaTrackingSide=ODS.CurrTrackingSide-prevTrackingSide;
-  prevTrackingFront=ODS.CurrTrackingFront;
   prevTrackingSide=ODS.CurrTrackingSide;
   return movement;
 }
 
-void TurnToAnglePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake){
-  double CSpeed=0;
+// void TurnToAnglePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake){
+//   double CSpeed=0;
 
-  double PVal=0;
-  double IVal=0;
-  double DVal=0; 
-  double LGV=0;
-  PrevE=0;
-  double Correction=0;
-  Brain.Timer.reset();
+//   double PVal=0;
+//   double IVal=0;
+//   double DVal=0; 
+//   double LGV=0;
+//   PrevE=0;
+//   double Correction=0;
+//   Brain.Timer.reset();
 
-  while(Brain.Timer.value() <= TE)
-  {
+//   while(Brain.Timer.value() <= TE)
+//   {
   
-  wait(20, msec);
-  }
-  if(brake){BStop();
-  wait(180,msec);}
-  else CStop();
-}
+//   wait(20, msec);
+//   }
+//   if(brake){BStop();
+//   wait(180,msec);}
+//   else CStop();
+// }
 
 //--------------------------------------------------------------------------PID FUNCTIONS
 
@@ -160,8 +166,8 @@ ChassisDataSet ChassisUpdate()
   ChassisDataSet CDS;
   CDS.Left=get_dist_travelled((LF.position(degrees)+LM.position(degrees)+LB.position(degrees))/3.0);
   CDS.Right=get_dist_travelled((RF.position(degrees)+RM.position(degrees)+RB.position(degrees))/3.0);
-  CDS.Avg=(CDS.Left+CDS.Right)/2;
-  CDS.Diff=CDS.Left-CDS.Right;
+  CDS.Avg=(CDS.Left+CDS.Right)/2.0;
+  CDS.Diff=(CDS.Right-CDS.Left);
   CDS.HDG=Gyro.heading(degrees);
 
   return CDS;
@@ -235,9 +241,6 @@ RM.stop();
 RB.stop();
 }
 
-
-
-
 void RunRoller(int val)
 {
 Intake1.setMaxTorque(100,percent);
@@ -261,8 +264,7 @@ void HighScore()
 
 int PrevE;//Error at t-1
 
-/** Moves the robot forward or backward. Negative speed moves
- * the robot forward. Positive value moves it backward. (Ik it's fucked up)
+/** Moves the robot forward or backward
  * @param KVals the PID constants
  * @param Speed the speed, from -100 to 100
  * @param dist distance travelled, in inches

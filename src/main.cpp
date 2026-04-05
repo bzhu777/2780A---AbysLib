@@ -310,8 +310,8 @@ int DriveTask(void){
     RV=-Controller1.Axis3.position(percent)+Controller1.Axis1.position(percent);
     LV=-Controller1.Axis3.position(percent)-Controller1.Axis1.position(percent);
 
-    if (abs(LV) < DeadBand) LV = 0;
-    if (abs(RV) < DeadBand) RV = 0;
+    if (abs(LV) < DeadBand) LV = 5;
+    if (abs(RV) < DeadBand) RV = 5;
 
     Move(LV,RV);
   }
@@ -320,7 +320,7 @@ return 0;
 }
 int V;
 
-//------------------------------------------------------------------------ REDIRECT MECH CONTROL
+//------------------------------------------------------------------------ INTAKE MECH CONTROL
 int ATask(void)
 {
   if (Controller1.ButtonR2.pressing()==1)
@@ -368,7 +368,7 @@ int PTask(void)
     {
       ButtonPressingDown=1;
       DownTaskActiv=1;
-      Wing.set(true);
+      Scraper.set(true);
     }
 
     else if(!Controller1.ButtonDown.pressing())ButtonPressingDown=0;
@@ -377,14 +377,14 @@ int PTask(void)
     {
       ButtonPressingDown=1;
       DownTaskActiv=0;
-      Wing.set(false);
+      Scraper.set(false);
     }
     //------------------------------------------------------------------------ WING CONTROL
     if(BTaskActiv==0&&Controller1.ButtonB.pressing()&&ButtonPressingB==0)
     {
       ButtonPressingB=1;
       BTaskActiv=1;
-      Scraper.set(true);
+      Wing.set(true);
     }
     else if(!Controller1.ButtonB.pressing())ButtonPressingB=0;
 
@@ -392,7 +392,7 @@ int PTask(void)
     {
       ButtonPressingB=1;
       BTaskActiv=0;
-      Scraper.set(false);
+      Wing.set(false);
     }
     
 
