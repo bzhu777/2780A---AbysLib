@@ -1,13 +1,13 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
-/*    Author:       VEX                                                       */
-/*    Created:      Thu Sep 26 2019                                           */
-/*    Description:  Competition Template                                      */
+/*    Author:       Bryan Zhu                                                 */
+/*    Created:      Sun Apr 05 2026                                           */
+/*    Description:                                                            */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-//#include "STDLib.cpp"
+
 #include "vex.h"
 
 #include "screen_gui.hpp"
@@ -42,6 +42,7 @@ void pre_auton(void) {
   PX=0;
   JX=0;
   AutoSelectorVal=0; // change to 0 for comp
+  SideVal=0; //always keep at 0
   odomUpdate=true;
   SP=false;
   Scraper.set(false);
@@ -62,7 +63,7 @@ Gyro.calibrate();
 Brain.Screen.drawRectangle(0,0,500,500);
 
 Brain.Screen.setFont(monoXL);
-Brain.Screen.setPenColor("#84fffd");
+Brain.Screen.setPenColor("#ffffff");
 Brain.Screen.setCursor(2,10);
 Brain.Screen.print("FLIR TIMEOUT");
 
@@ -79,30 +80,60 @@ DisplayWords();
 
 //task AutoSelTask=task(ScreenSelMain);
   while(!EXIT)
-{
-if(Brain.Screen.xPosition()<100)
-{
-if(Brain.Screen.yPosition()<75&&Brain.Screen.yPosition()>25)AutoSelectorVal=1;
-else if(Brain.Screen.yPosition()<150&&Brain.Screen.yPosition()>100)AutoSelectorVal=3;
-else if(Brain.Screen.yPosition()<225&&Brain.Screen.yPosition()>175)AutoSelectorVal=5;
-}
-else if(Brain.Screen.xPosition()>375)
-{
-if(Brain.Screen.yPosition()<75&&Brain.Screen.yPosition()>25)AutoSelectorVal=2;
-else if(Brain.Screen.yPosition()<150&&Brain.Screen.yPosition()>100)AutoSelectorVal=4;
-else if(Brain.Screen.yPosition()<225&&Brain.Screen.yPosition()>175)AutoSelectorVal=6;
-}
+    {
+    if(Brain.Screen.xPosition()<165&&Brain.Screen.xPosition()>4)
+      {
+      if(Brain.Screen.yPosition()<80&&Brain.Screen.yPosition()>5)SideVal=1;
+      else if(Brain.Screen.yPosition()<157&&Brain.Screen.yPosition()>82)SideVal=2;
+      else if(Brain.Screen.yPosition()<235&&Brain.Screen.yPosition()>160)SideVal=3;
+      }
 
-if(Brain.Screen.xPosition()>187&&Brain.Screen.xPosition()<287)
-{
-if(Brain.Screen.yPosition()<55&&Brain.Screen.yPosition()>5) EXIT=true;
-else if(Brain.Screen.yPosition()>125&&Brain.Screen.yPosition()<225)AutoSelectorVal=7;
-}
-
+    if(SideVal==1)
+    {
+    
+    if(Brain.Screen.xPosition()<323&&Brain.Screen.xPosition()>170)
+      {
+      if(Brain.Screen.yPosition()<75&&Brain.Screen.yPosition()>15)AutoSelectorVal=1;
+      else if(Brain.Screen.yPosition()<147&&Brain.Screen.yPosition()>87)AutoSelectorVal=3;
+      }
+    
+    else if(Brain.Screen.xPosition()<470&&Brain.Screen.xPosition()>330)
+    {
+      if(Brain.Screen.yPosition()<75&&Brain.Screen.yPosition()>15)AutoSelectorVal=2;
+      else if(Brain.Screen.yPosition()<147&&Brain.Screen.yPosition()>87)AutoSelectorVal=4;
+    }
+    if(Brain.Screen.xPosition()<470&&Brain.Screen.xPosition()>170&&Brain.Screen.yPosition()>164&&Brain.Screen.yPosition()<224)EXIT=true;
+    }
+    if(SideVal==2)
+    {
+    if(Brain.Screen.xPosition()<323&&Brain.Screen.xPosition()>170)
+      {
+      if(Brain.Screen.yPosition()<75&&Brain.Screen.yPosition()>15)AutoSelectorVal=5;
+      else if(Brain.Screen.yPosition()<147&&Brain.Screen.yPosition()>87)AutoSelectorVal=7;
+      }
+    
+    else if(Brain.Screen.xPosition()<470&&Brain.Screen.xPosition()>330)
+    {
+      if(Brain.Screen.yPosition()<75&&Brain.Screen.yPosition()>15)AutoSelectorVal=6;
+      else if(Brain.Screen.yPosition()<147&&Brain.Screen.yPosition()>87)AutoSelectorVal=8;
+    }
+    if(Brain.Screen.xPosition()<470&&Brain.Screen.xPosition()>170&&Brain.Screen.yPosition()>164&&Brain.Screen.yPosition()<224)EXIT=true;
+    }
+    if(SideVal==3)
+    {
+    if(Brain.Screen.xPosition()<320&&Brain.Screen.xPosition()>185)
+      {
+      if(Brain.Screen.yPosition()<155&&Brain.Screen.yPosition()>15)AutoSelectorVal=9;
+      }
+    
+    else if(Brain.Screen.xPosition()<465&&Brain.Screen.xPosition()>330)
+    {
+      if(Brain.Screen.yPosition()<155&&Brain.Screen.yPosition()>15)AutoSelectorVal=10;
+    }
+    if(Brain.Screen.xPosition()<470&&Brain.Screen.xPosition()>170&&Brain.Screen.yPosition()>164&&Brain.Screen.yPosition()<224)EXIT=true;
+    }
 if(Brain.Screen.pressing()&&!SP) UpdateDynamic();
-
 SP=Brain.Screen.pressing();
-
 }
 
 Brain.Screen.clearScreen();
@@ -304,14 +335,14 @@ int LV;
 int DriveTask(void){
   while(true)
   {
-    int DeadBand = 5;
+    int DeadBand = 10;
 
     EXIT=true;
     RV=-Controller1.Axis3.position(percent)+Controller1.Axis1.position(percent);
     LV=-Controller1.Axis3.position(percent)-Controller1.Axis1.position(percent);
 
-    if (abs(LV) < DeadBand) LV = 5;
-    if (abs(RV) < DeadBand) RV = 5;
+    if (abs(LV) < DeadBand) LV = 0;
+    if (abs(RV) < DeadBand) RV = 0;
 
     Move(LV,RV);
   }
@@ -323,31 +354,31 @@ int V;
 //------------------------------------------------------------------------ INTAKE MECH CONTROL
 int ATask(void)
 {
-  if (Controller1.ButtonR2.pressing()==1)
+  if (Controller1.ButtonR2.pressing()==1) // middle goal
     {
       RunRoller(100);
       Redirect1.set(false);
-      Storing.set(false);
+      Storing.set(true);
     }
-    else if (Controller1.ButtonL2.pressing()==1)
+    else if (Controller1.ButtonL2.pressing()==1) // outtake
     {
       RunRoller(-100);
     }
-    else if (Controller1.ButtonR1.pressing()==1)
+    else if (Controller1.ButtonR1.pressing()==1) // high goal
     {
       RunRoller(100);
       Redirect1.set(true);
-      Storing.set(false);
-    }
-    else if (Controller1.ButtonL1.pressing()==1) 
-    {
-      RunRoller(100);
       Storing.set(true);
     }
-    else if (Controller1.ButtonUp.pressing()==1)
+    else if (Controller1.ButtonL1.pressing()==1) // storing
+    {
+      RunRoller(100);
+      Storing.set(false);
+    }
+    else if (Controller1.ButtonUp.pressing()==1) // middle goal
     {
       RunRoller(50);
-      Storing.set(false);
+      Storing.set(true);
     }
     else
     {

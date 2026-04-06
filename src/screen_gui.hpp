@@ -3,6 +3,7 @@
 #include "vex.h"
 
 extern int AutoSelectorVal;
+extern int SideVal;
 
 extern void DisplayAutoSelector();
 extern void DisplayWords();
