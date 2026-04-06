@@ -116,7 +116,8 @@ void UpdatePos(void) {
   Ypos += dY;
   prevHDGpos = HDG;
 
-  std::cout << "X: " << Xpos << " Y: " << Ypos << " HDG: " << HDG << std::endl; // print x and y for testing
+  std::cout <<(Intake1.temperature(celsius) + Intake2.temperature(celsius))/2.0 << std::endl;
+  //std::cout << "X: " << Xpos << " Y: " << Ypos << " HDG: " << HDG << std::endl; // print x and y for testing
 }
 
 OdomDataSet OdomUpdate()

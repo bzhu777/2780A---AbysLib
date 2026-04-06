@@ -247,7 +247,7 @@ int LV;
 int DriveTask(void){
   while(true)
   {
-    int DeadBand = 10;
+    int DeadBand = 12;
 
     EXIT=true;
     RV=-Controller1.Axis3.position(percent)+Controller1.Axis1.position(percent);
@@ -270,7 +270,7 @@ int ATask(void)
     {
       RunRoller(100);
       Redirect1.set(false);
-      Storing.set(true);
+      Storing.set(false);
     }
     else if (Controller1.ButtonL2.pressing()==1) // outtake
     {
@@ -280,17 +280,18 @@ int ATask(void)
     {
       RunRoller(100);
       Redirect1.set(true);
-      Storing.set(true);
+      Storing.set(false);
     }
     else if (Controller1.ButtonL1.pressing()==1) // storing
     {
       RunRoller(100);
-      Storing.set(false);
+      Storing.set(true);
+      Redirect1.set(true);
     }
     else if (Controller1.ButtonUp.pressing()==1) // middle goal
     {
       RunRoller(50);
-      Storing.set(true);
+      Storing.set(false);
     }
     else
     {
@@ -389,7 +390,6 @@ int main() {
   Competition.drivercontrol(usercontrol);
   // Run the pre-autonomous function.
   pre_auton();
-  
   
 
   // Prevent main from exiting with an infinite loop.
