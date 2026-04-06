@@ -8,6 +8,6 @@
 
 void right36block() { //right, long goal 6, mid goal 3
 
-    MoveEncoderPID(TestPara, 30, 2, 0.2, 0, true);
+
 
 }

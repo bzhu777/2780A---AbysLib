@@ -6,6 +6,6 @@
 // TurnMaxTimePID(TestPara, Desired Heading -180 to 180, time out to calculate turn, Braking?)
 // MoveTimePID(TestPara, motor speed, time traveled (sec), time to full speed, heading, false);
 
-void odomtest() { //Odom Test Auto
+void odomtest() { //Odom Test 
     SetPos(0, 0, 0);
 }

@@ -188,41 +188,61 @@ if(SideVal==3){ // both
 
 if(AutoSelectorVal==1){
   drawRoundedRect(183,15,140,60,20,ClrLightBlue);
+  Brain.Screen.setPenColor("#58a7fc");
+  Brain.Screen.printAt(200,50, "Auto 1");
 }
 
 if(AutoSelectorVal==2){
   drawRoundedRect(330,15,140,60,20,ClrLightBlue);
+  Brain.Screen.setPenColor("#58a7fc");
+  Brain.Screen.printAt(347,50, "Auto 2");
 }
 
 if(AutoSelectorVal==3){
   drawRoundedRect(183,87,140,60,20,ClrLightBlue);
+  Brain.Screen.setPenColor("#58a7fc");
+  Brain.Screen.printAt(200,122, "Auto 3");
 }
 
 if(AutoSelectorVal==4){
   drawRoundedRect(330,87,140,60,20,ClrLightBlue);
+  Brain.Screen.setPenColor("#58a7fc");
+  Brain.Screen.printAt(347,122, "Auto 4");
 }
 
 if(AutoSelectorVal==5){
   drawRoundedRect(183,15,140,60,20,ClrLightBlue);
+  Brain.Screen.setPenColor("#58a7fc");
+  Brain.Screen.printAt(200,50, "Auto 5");
 }
 
 if(AutoSelectorVal==6){
   drawRoundedRect(330,15,140,60,20,ClrLightBlue);
+  Brain.Screen.setPenColor("#58a7fc");
+  Brain.Screen.printAt(347,50, "Auto 6");
 }
 
 if(AutoSelectorVal==7){
   drawRoundedRect(183,87,140,60,20,ClrLightBlue);
+  Brain.Screen.setPenColor("#58a7fc");
+  Brain.Screen.printAt(200,122, "Auto 7");
 }
 
 if(AutoSelectorVal==8){
   drawRoundedRect(330,87,140,60,20,ClrLightBlue);
+  Brain.Screen.setPenColor("#58a7fc");
+  Brain.Screen.printAt(347,122, "Auto 8");
 }
 
 if(AutoSelectorVal==9){
   drawRoundedRect(185,15,135,140,20,ClrLightBlue);
+  Brain.Screen.setPenColor("#58a7fc");
+  Brain.Screen.printAt(200,87, "Auto 9");
 }
 
 if(AutoSelectorVal==10){
   drawRoundedRect(330,15,135,140,20,ClrLightBlue);
+  Brain.Screen.setPenColor("#58a7fc");
+  Brain.Screen.printAt(347,87, "Auto 10");
 }
 }

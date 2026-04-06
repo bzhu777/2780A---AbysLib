@@ -137,107 +137,10 @@ SP=Brain.Screen.pressing();
 }
 
 Brain.Screen.clearScreen();
-if(AutoSelectorVal==1){
-  Brain.Screen.setFillColor(black);
-Brain.Screen.setFont(monoXL);
-Brain.Screen.setPenColor("#84fffd");
-Brain.Screen.setCursor(3,10);
-Brain.Screen.print("LEFT");
-Brain.Screen.setCursor(4,10);
-Brain.Screen.print("7WING");
-Brain.Screen.setFont(monoM);
-  Brain.Screen.setFillColor("#84fffd");
-
-}
-
-if(AutoSelectorVal==2){
-Brain.Screen.setFillColor(black);
-
-  Brain.Screen.setFont(monoXL);
-Brain.Screen.setPenColor("#84fffd");
-Brain.Screen.setCursor(3,10);
-Brain.Screen.print("Right");
-Brain.Screen.setCursor(4,10);
-Brain.Screen.print("9BLOCK");
-Brain.Screen.setFont(monoM);
-  Brain.Screen.setFillColor("#84fffd");
-}
-
-if(AutoSelectorVal==3){
-
-Brain.Screen.setFillColor(black);
-
-    Brain.Screen.setFont(monoXL);
-Brain.Screen.setPenColor("#84fffd");
-Brain.Screen.setCursor(3,10);
-Brain.Screen.print("Left");
-Brain.Screen.setCursor(4,10);
-Brain.Screen.print("34WING");
-Brain.Screen.setFont(monoM);  
-  Brain.Screen.setFillColor("#84fffd");
-}
-
-if(AutoSelectorVal==4){
-
-Brain.Screen.setFillColor(black);
-
-  Brain.Screen.setFont(monoXL);
-Brain.Screen.setPenColor("#84fffd");
-Brain.Screen.setCursor(3,10);
-Brain.Screen.print("Right");
-Brain.Screen.setCursor(4,10);
-Brain.Screen.print("34WING");
-Brain.Screen.setFont(monoM); 
-  Brain.Screen.setFillColor("#84fffd");
-
-}
-
-if(AutoSelectorVal==5){
-
-Brain.Screen.setFillColor(black);
-    Brain.Screen.setFont(monoXL);
-Brain.Screen.setPenColor("#84fffd");
-Brain.Screen.setCursor(3,10);
-Brain.Screen.print("ODOM TEST");
-Brain.Screen.setCursor(4,10);
-Brain.Screen.print("POSITION UPDATE");
-Brain.Screen.setFont(monoM); 
-  Brain.Screen.setFillColor("#84fffd");
-
-}
-
-if(AutoSelectorVal==6){
-  
-  Brain.Screen.setFillColor(black);
-    Brain.Screen.setFont(monoXL);
-Brain.Screen.setPenColor("#84fffd");
-Brain.Screen.setCursor(3,10);
-Brain.Screen.print("Solo");
-Brain.Screen.setCursor(4,10);
-Brain.Screen.print("AWP");
-Brain.Screen.setFont(monoM); 
-  Brain.Screen.setFillColor("#84fffd");
-
-  }
-
-if(AutoSelectorVal==7){
-
 Brain.Screen.setFillColor(black);
 Brain.Screen.setFont(monoXL);
-Brain.Screen.setPenColor("#84fffd");
-Brain.Screen.setCursor(3,10);
-Brain.Screen.print("SKILLS");
-Brain.Screen.setCursor(4,10);
-Brain.Screen.print("SKILLS");
-Brain.Screen.setFont(monoM); 
-Brain.Screen.setFillColor("#84fffd");
-
-}
-
-Brain.Screen.setFillColor(black);
-Brain.Screen.setFont(monoXL);
-Brain.Screen.setPenColor("#84fffd");
-Brain.Screen.setCursor(5,10);
+Brain.Screen.setPenColor("#ffffff");
+Brain.Screen.setCursor(3,4);
 Brain.Screen.print("AUTO CONFIRMED");
 
 
@@ -303,14 +206,23 @@ if(AutoSelectorVal==6)//SAWP
 if(AutoSelectorVal==7)//prog skills
 { 
   progskills();
-
 }
-//MoveTimePID(TestPara, -100, 0.5,0.1,-40,true);
-//(PID Parameters, motor speed -100 - 100, time for travel 0 - inf, time to accelerate to full speed, Absolute Heading, Braking?)
 
-    // ..........................................................................
-  // Insert autonomous user code here.
-  // ..........................................................................
+if(AutoSelectorVal==8) // auto 8
+{
+  auto8();
+}
+
+if(AutoSelectorVal==9) // auto 9
+{
+  auto9();
+}
+
+if(AutoSelectorVal==10) // auto 10
+{
+  auto10();
+}
+
 CStop();
 }
 
