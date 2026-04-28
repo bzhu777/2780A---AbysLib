@@ -10,7 +10,8 @@ extern int JX;
 //ODOM VARIABLES
 
 extern double TrackingFront;
-extern double prevTrackingFront;
+extern double prevTrackingFrontLeft;
+extern double prevTrackingFrontRight;
 extern double TrackingSide;
 extern double prevTrackingSide;
 extern double Xpos;
@@ -19,12 +20,14 @@ extern double ThetaDeg;
 extern double prevHDGpos;
 
 struct OdomDataSet{
-  double CurrTrackingFront;
+  double CurrTrackingFrontLeft;
+  double CurrTrackingFrontRight;
   double CurrTrackingSide;
 };
 
 struct OdomDeltaSet{
-  double DeltaTrackingFront;
+  double DeltaTrackingFrontLeft;
+  double DeltaTrackingFrontRight;
   double DeltaTrackingSide;
 };
 

@@ -23,13 +23,15 @@ digital_out Scraper = digital_out(Brain.ThreeWirePort.B);
 digital_out Redirect1 = digital_out(Brain.ThreeWirePort.C);
 digital_out Storing = digital_out(Brain.ThreeWirePort.A);
 inertial Gyro = inertial(PORT5);
-rotation xOdom = rotation(PORT3);
+rotation xROdom = rotation(PORT3);
+rotation xLOdom = rotation(PORT4);
 rotation yOdom = rotation(PORT4);
 //Naming convention: 
 // Important variables
 const double wheelDiam = 2.75;
 const double OdomDiam = 2; //odometry wheel diameter in inches
-const double OdomFrontOffset = 5.0; //distance from center of robot to front odometry wheel
+const double LeftOdomFrontOffset = 5.0; // tracking center distance to wheel
+const double RightOdomFrontOffset = 5.0; // tracking center distance to wheel
 const double OdomSideOffset = 5.0; //distance from center of robot to side odometry wheel
 
 const double wheelToMotorRatio = 36.0/48;

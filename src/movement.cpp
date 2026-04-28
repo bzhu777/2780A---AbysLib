@@ -27,8 +27,10 @@ double Xpos=0;
 double Ypos=0;
 double prevTrackingFront=0;
 double prevTrackingSide=0;
-double prevHDGpos=0;
-double ThetaDeg=0;
+double prevHDG=0;
+double HDG=0;
+double prevX=0;
+double prevY=0;
 
 PIDDataSet TestPara{3,0.1,0.2};
 
@@ -72,17 +74,18 @@ void OdomZeroing() {
  */
 void SetPos(double X, double Y, double HDG)
 {
-  odomUpdate=false;
-  Xpos=X;
-  Ypos=Y;
-  Gyro.setRotation(HDG, degrees);
-  prevHDGpos = HDG;
-  xOdom.resetPosition();
-  yOdom.resetPosition();
-  OdomDataSet ODS = OdomUpdate();
-  prevTrackingFront = ODS.CurrTrackingFront;
-  prevTrackingSide  = ODS.CurrTrackingSide;
-  odomUpdate=true;
+  // odomUpdate=false;
+  // Xpos=X;
+  // Ypos=Y;
+  // Gyro.setRotation(HDG, degrees);
+  // prevHDG = HDG;
+  // xOdom.resetPosition();
+  // yOdom.resetPosition();
+  // OdomDataSet ODS = OdomUpdate();
+  // prevTrackingFrontLeft = ODS.CurrTrackingFrontLeft;
+  // prevTrackingFrontRight = ODS.CurrTrackingFrontRight;
+  // prevTrackingSide  = ODS.CurrTrackingSide;
+  // odomUpdate=true;
 }
 
 /* gets the gyro rotation in degrees */
@@ -93,37 +96,51 @@ double getGyroDeg()
 
 void UpdatePos(void) {
   OdomDeltaSet movement = OdomGetDistTravelled();
-  double dF = movement.DeltaTrackingFront; // stores some values from the sensor into local variables
+  double dFL = movement.DeltaTrackingFrontLeft;
+  double dFR = movement.DeltaTrackingFrontRight;
   double dS = movement.DeltaTrackingSide;
-  double HDG = Gyro.rotation(degrees);
 
-  double dThetaDeg = HDG - prevHDGpos; // this is bascially how much the robot turned since last update
+  double Theta = (dFL-dFR) / (RightOdomFrontOffset + LeftOdomFrontOffset);
+  double ABSorientation = Theta + prevHDG;
 
-  //convert to radians
-  double dThetaRad = dThetaDeg * M_PI / 180.0;
+  double DisplacementMultiplier = 2 * sin(Theta/2);
+  double MovementAVG = (dFL + dFR) / 2.0;
+  double OffsetAVG = (LeftOdomFrontOffset + RightOdomFrontOffset) / 2.0;
+  double OrientationAVG = (prevHDG + Theta/2);
+  double DisplacementX;
+  double DisplacementY;
 
-  dF -= OdomFrontOffset * dThetaRad; // offset correction
-  dS -= OdomSideOffset  * dThetaRad;
+  if (Theta == 0)
+  {
+    DisplacementX = dS;
+    DisplacementY = MovementAVG;
+  }
+  else
+  {
+    DisplacementX = DisplacementMultiplier * (dS / Theta + OdomSideOffset);
+    DisplacementY = DisplacementMultiplier * (MovementAVG / Theta + OffsetAVG);
+  }
 
-  // average heading during the movement
-  double ThetaMidRad = (prevHDGpos + dThetaDeg / 2.0) * M_PI / 180.0;
+  double r = sqrt(DisplacementX*DisplacementX + DisplacementY*DisplacementY);
+  double robotAngle = atan2(DisplacementY, DisplacementX);
+  double angleOffset = robotAngle - OrientationAVG;
+  double DisplacementABS[2] = {r * cos(angleOffset), r * sin(angleOffset)};
 
-  double dX = dS * cos(ThetaMidRad) - dF * sin(ThetaMidRad);
-  double dY = dS * sin(ThetaMidRad) + dF * cos(ThetaMidRad);
-  
+  Xpos = prevX + DisplacementABS[0];
+  Ypos = prevY + DisplacementABS[1];
 
-  Xpos += dX; // update global position
-  Ypos += dY;
-  prevHDGpos = HDG;
-
-  std::cout <<(Intake1.temperature(celsius) + Intake2.temperature(celsius))/2.0 << std::endl;
-  //std::cout << "X: " << Xpos << " Y: " << Ypos << " HDG: " << HDG << std::endl; // print x and y for testing
+  prevHDG = ABSorientation;
+  prevX = Xpos;
+  prevY = Ypos;
 }
+
+
 
 OdomDataSet OdomUpdate()
 {
   OdomDataSet ODS;
-  ODS.CurrTrackingFront=get_odom_dist_travelled(xOdom.position(degrees));
+  ODS.CurrTrackingFrontLeft=get_odom_dist_travelled(xLOdom.position(degrees));
+  ODS.CurrTrackingFrontRight=get_odom_dist_travelled(xROdom.position(degrees));
   ODS.CurrTrackingSide=get_odom_dist_travelled(yOdom.position(degrees));
   return ODS;
 }
@@ -133,31 +150,15 @@ OdomDeltaSet OdomGetDistTravelled()
   OdomDataSet ODS=OdomUpdate();
   OdomDeltaSet movement;
   ChassisDataSet CDS;
+  movement.DeltaTrackingFrontLeft=ODS.CurrTrackingFrontLeft-prevTrackingFrontLeft;
+  movement.DeltaTrackingFrontRight=ODS.CurrTrackingFrontRight-prevTrackingFrontRight;
   movement.DeltaTrackingSide=ODS.CurrTrackingSide-prevTrackingSide;
   prevTrackingSide=ODS.CurrTrackingSide;
+  prevTrackingFrontLeft=ODS.CurrTrackingFrontLeft;
+  prevTrackingFrontRight=ODS.CurrTrackingFrontRight;
+
   return movement;
 }
-
-// void TurnToAnglePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake){
-//   double CSpeed=0;
-
-//   double PVal=0;
-//   double IVal=0;
-//   double DVal=0; 
-//   double LGV=0;
-//   PrevE=0;
-//   double Correction=0;
-//   Brain.Timer.reset();
-
-//   while(Brain.Timer.value() <= TE)
-//   {
-  
-//   wait(20, msec);
-//   }
-//   if(brake){BStop();
-//   wait(180,msec);}
-//   else CStop();
-// }
 
 //--------------------------------------------------------------------------PID FUNCTIONS
 

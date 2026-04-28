@@ -17,14 +17,16 @@ extern digital_out Redirect1;
 extern digital_out Storing;
 extern digital_out Scraper;
 extern inertial Gyro;
-extern rotation xOdom;
+extern rotation xROdom;
+extern rotation xLOdom;
 extern rotation yOdom;
 
 extern const double wheelDiam;
 extern const double wheelToMotorRatio;
 
 extern const double OdomDiam;
-extern const double OdomFrontOffset;
+extern const double LeftOdomFrontOffset;
+extern const double RightOdomFrontOffset;
 extern const double OdomSideOffset;
 
 /**
