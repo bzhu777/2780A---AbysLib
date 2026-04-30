@@ -18,6 +18,8 @@ extern double Xpos;
 extern double Ypos;
 extern double ThetaDeg;
 extern double prevHDGpos;
+extern double ABSorientation;
+
 
 struct OdomDataSet{
   double CurrTrackingFrontLeft;
@@ -70,7 +72,8 @@ extern void NeutralScore();
 extern int PrevE;
 extern void MoveEncoderPID(PIDDataSet KVals, int Speed, double dist,double AccT, double ABSHDG,bool brake);
 extern void TurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
-extern void SpeedTurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, double Speed, bool brake);
+extern void TurnToAngle(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
+extern void TurnToPoint(PIDDataSet KVals,double Xval, double Yval,double TE, bool brake);
 void MaxTimePIDTurnOneSide(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
 void MoveTimePID(PIDDataSet KVals, int Speed, double TE,double AccT,double ABSHDG, bool brake);
 
