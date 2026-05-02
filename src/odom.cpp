@@ -63,7 +63,6 @@ void UpdatePos(void) {
   double Theta = (dFL-dFR) / (RightOdomFrontOffset + LeftOdomFrontOffset);
   double ABSorientation = (Theta*180/M_PI) + prevHDG;
 
-  double DisplacementMultiplier = 2 * sin(Theta/2);
   double MovementAVG = (dFL + dFR) / 2.0;
   double OffsetAVG = (LeftOdomFrontOffset + RightOdomFrontOffset) / 2.0;
   double OrientationAVG = (prevHDG + Theta/2);
@@ -77,8 +76,8 @@ void UpdatePos(void) {
   }
   else
   {
-    DisplacementX = DisplacementMultiplier * (dS / Theta + OdomSideOffset);
-    DisplacementY = DisplacementMultiplier * (MovementAVG / Theta + OffsetAVG);
+    DisplacementX = 2 * sin(Theta/2) * (dS / Theta + OdomSideOffset);
+    DisplacementY = 2 * sin(Theta/2) * (MovementAVG / Theta + OffsetAVG);
   }
 
   double r = sqrt(DisplacementX*DisplacementX + DisplacementY*DisplacementY);

@@ -74,6 +74,7 @@ extern void MoveEncoderPID(PIDDataSet KVals, int Speed, double dist,double AccT,
 extern void TurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
 extern void TurnToAngle(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
 extern void TurnToPoint(PIDDataSet KVals,double Xval, double Yval,double TE, bool brake);
+extern void predictFutureState(double goalX, double goalY);
 void MaxTimePIDTurnOneSide(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
 void MoveTimePID(PIDDataSet KVals, int Speed, double TE,double AccT,double ABSHDG, bool brake);
 
