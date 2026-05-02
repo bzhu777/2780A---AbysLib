@@ -20,6 +20,7 @@ extern inertial Gyro;
 extern rotation xROdom;
 extern rotation xLOdom;
 extern rotation yOdom;
+extern aivision Resetter;
 
 extern const double wheelDiam;
 extern const double wheelToMotorRatio;

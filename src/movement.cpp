@@ -21,6 +21,10 @@ int PB;
 int PX;
 int JX;
 
+double RealTagHeight = 5.0; //in inches
+double RealTagWidth = 5.0; //in inches
+double focalLength = 200.0; 
+
 //General Sect;
 //This section includes all general codes for drive and auto
 
@@ -45,7 +49,25 @@ void Zeroing(bool dist, bool HDG)
   }
 }
 
+void aprilTagReset(double TARGET_ID)
+{
+  Resetter.takeSnapshot(aivision::ALL_TAGS);
+  for (int i = 0; i < Resetter.objectCount; i++) {
+    if (Resetter.objects[i].exists && Resetter.objects[i].id == TARGET_ID)
+    {
+      double LocateX = Resetter.objects[i].centerX;
+      double LocateY = Resetter.objects[i].centerY;
+      double picAngle = Resetter.objects[i].angle;
+      double height = Resetter.objects[i].height;
+      double width = Resetter.objects[i].width;
 
+      double distance = (RealTagHeight * focalLength / height + RealTagWidth * focalLength / width) / 2.0;
+    }
+  }
+
+
+  }
+  
 
 ChassisDataSet ChassisUpdate()
 {

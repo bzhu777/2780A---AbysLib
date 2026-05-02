@@ -26,6 +26,8 @@ inertial Gyro = inertial(PORT5);
 rotation xROdom = rotation(PORT3);
 rotation xLOdom = rotation(PORT4);
 rotation yOdom = rotation(PORT4);
+aivision Resetter = aivision(PORT6, aivision::ALL_TAGS);
+
 //Naming convention: 
 // Important variables
 const double wheelDiam = 2.75;

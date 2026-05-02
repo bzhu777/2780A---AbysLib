@@ -39,18 +39,18 @@ void OdomZeroing() {
  */
 void SetPos(double X, double Y, double HDG)
 {
-  // odomUpdate=false;
-  // Xpos=X;
-  // Ypos=Y;
-  // Gyro.setRotation(HDG, degrees);
-  // prevHDG = HDG;
-  // xOdom.resetPosition();
-  // yOdom.resetPosition();
-  // OdomDataSet ODS = OdomUpdate();
-  // prevTrackingFrontLeft = ODS.CurrTrackingFrontLeft;
-  // prevTrackingFrontRight = ODS.CurrTrackingFrontRight;
-  // prevTrackingSide  = ODS.CurrTrackingSide;
-  // odomUpdate=true;
+  odomUpdate=false;
+  Xpos=X;
+  Ypos=Y;
+  prevHDG = HDG;
+  xROdom.resetPosition();
+  xLOdom.resetPosition();
+  yOdom.resetPosition();
+  OdomDataSet ODS = OdomUpdate();
+  prevTrackingFrontLeft = ODS.CurrTrackingFrontLeft;
+  prevTrackingFrontRight = ODS.CurrTrackingFrontRight;
+  prevTrackingSide  = ODS.CurrTrackingSide;
+  odomUpdate=true;
 }
 
 
