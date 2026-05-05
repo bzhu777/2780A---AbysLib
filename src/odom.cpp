@@ -60,37 +60,48 @@ void UpdatePos(void) {
   double dFR = movement.DeltaTrackingFrontRight;
   double dS = movement.DeltaTrackingSide;
 
-  double Theta = (dFL-dFR) / (RightOdomFrontOffset + LeftOdomFrontOffset);
-  double ABSorientation = (Theta*180/M_PI) + prevHDG;
+  double invTrackWidth = 1.0 / (RightOdomFrontOffset + LeftOdomFrontOffset);
+  double Theta = (dFL - dFR) * invTrackWidth;
 
-  double MovementAVG = (dFL + dFR) / 2.0;
-  double OffsetAVG = (LeftOdomFrontOffset + RightOdomFrontOffset) / 2.0;
-  double OrientationAVG = (prevHDG + Theta/2);
+  double MovementAVG = (dFL + dFR) * 0.5;
+  double OffsetAVG = (LeftOdomFrontOffset + RightOdomFrontOffset) * 0.5;
+  double OrientationAVG = prevHDG + Theta * 0.5;
+
   double DisplacementX;
   double DisplacementY;
 
-  if (Theta == 0)
-  {
+  if (fabs(Theta) < 1e-6)
+{
     DisplacementX = dS;
     DisplacementY = MovementAVG;
-  }
-  else
-  {
-    DisplacementX = 2 * sin(Theta/2) * (dS / Theta + OdomSideOffset);
-    DisplacementY = 2 * sin(Theta/2) * (MovementAVG / Theta + OffsetAVG);
-  }
+}
+else
+{
+    double halfTheta = Theta * 0.5;
+    double sinHalfTheta = sin(halfTheta);
+    double commonFactor = 2.0 * sinHalfTheta / Theta;
 
-  double r = sqrt(DisplacementX*DisplacementX + DisplacementY*DisplacementY);
-  double robotAngle = atan2(DisplacementY, DisplacementX);
-  double angleOffset = robotAngle - OrientationAVG;
-  double DisplacementABS[2] = {r * cos(angleOffset), r * sin(angleOffset)};
+    DisplacementX = commonFactor * (dS + Theta * OdomSideOffset);
+    DisplacementY = commonFactor * (MovementAVG + Theta * OffsetAVG);
+}
 
-  Xpos = prevX + DisplacementABS[0];
-  Ypos = prevY + DisplacementABS[1];
+double r = sqrt(DisplacementX * DisplacementX + DisplacementY * DisplacementY);
+double robotAngle = atan2(DisplacementY, DisplacementX);
 
-  prevHDG = ABSorientation;
-  prevX = Xpos;
-  prevY = Ypos;
+double angleOffset = robotAngle - OrientationAVG;
+double cosAO = cos(angleOffset);
+double sinAO = sin(angleOffset);
+
+double DisplacementABS[2] = { r * cosAO, r * sinAO };
+
+Xpos = prevX + DisplacementABS[0];
+Ypos = prevY + DisplacementABS[1];
+
+prevHDG = ABSorientation;
+prevX = Xpos;
+prevY = Ypos;
+
+std::cout << Xpos << ", " << Ypos << ", " << ABSorientation << std::endl;
 }
 
 
