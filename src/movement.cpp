@@ -21,9 +21,9 @@ int PB;
 int PX;
 int JX;
 
-double RealTagHeight = 5.0; //in inches
-double RealTagWidth = 5.0; //in inches
-double focalLength = 200.0; 
+float RealTagHeight = 5.0; //in inches
+float RealTagWidth = 5.0; //in inches
+float focalLength = 200.0; 
 
 //General Sect;
 //This section includes all general codes for drive and auto

@@ -22,13 +22,14 @@ extern rotation xLOdom;
 extern rotation yOdom;
 extern aivision Resetter;
 
-extern const double wheelDiam;
-extern const double wheelToMotorRatio;
+extern const float wheelDiam;
+extern const float wheelToMotorRatio;
 
-extern const double OdomDiam;
-extern const double LeftOdomFrontOffset;
-extern const double RightOdomFrontOffset;
-extern const double OdomSideOffset;
+extern const float OdomDiam;
+extern const float LeftOdomFrontOffset;
+extern const float RightOdomFrontOffset;
+extern const float OdomSideOffset;
+
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

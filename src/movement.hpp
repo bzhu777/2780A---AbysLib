@@ -9,36 +9,38 @@ extern int JX;
 
 //ODOM VARIABLES
 
-extern double TrackingFront;
-extern double prevTrackingFrontLeft;
-extern double prevTrackingFrontRight;
-extern double TrackingSide;
-extern double prevTrackingSide;
-extern double Xpos;
-extern double Ypos;
-extern double ThetaDeg;
-extern double prevHDGpos;
-extern double ABSorientation;
+extern float TrackingFront;
+extern float prevTrackingFrontLeft;
+extern float prevTrackingFrontRight;
+extern float TrackingSide;
+extern float prevTrackingSide;
+extern float Xpos;
+extern float Ypos;
+extern float ThetaDeg;
+extern float prevHDGpos;
+extern float ABSorientation;
 
+extern const float  invTrackWidth;
+extern const float  OffsetAVG;
 
 struct OdomDataSet{
-  double CurrTrackingFrontLeft;
-  double CurrTrackingFrontRight;
-  double CurrTrackingSide;
+  float CurrTrackingFrontLeft;
+  float CurrTrackingFrontRight;
+  float CurrTrackingSide;
 };
 
 struct OdomDeltaSet{
-  double DeltaTrackingFrontLeft;
-  double DeltaTrackingFrontRight;
-  double DeltaTrackingSide;
+  float DeltaTrackingFrontLeft;
+  float DeltaTrackingFrontRight;
+  float DeltaTrackingSide;
 };
 
 struct ChassisDataSet{
   int Left;
   int Right;
-  double Avg;   // Average between left and right of the drive train
+  float Avg;   // Average between left and right of the drive train
   int Diff;     // Left - Right
-  double HDG;   // Robot heading
+  float HDG;   // Robot heading
 };
 
 struct PIDDataSet{
@@ -51,7 +53,7 @@ struct PIDDataSet{
 
 extern void OdomZeroing(void);
 extern void UpdatePos(void);
-extern void SetPos(double X, double Y, double HDG);
+extern void SetPos(float X, float Y, float HDG);
 extern OdomDeltaSet OdomGetDistTravelled();
 extern OdomDataSet OdomUpdate();
 

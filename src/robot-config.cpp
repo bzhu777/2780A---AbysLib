@@ -30,13 +30,13 @@ aivision Resetter = aivision(PORT6, aivision::ALL_TAGS);
 
 //Naming convention: 
 // Important variables
-const double wheelDiam = 2.75;
-const double OdomDiam = 2; //odometry wheel diameter in inches
-const double LeftOdomFrontOffset = 5.0; // tracking center distance to wheel
-const double RightOdomFrontOffset = 5.0; // tracking center distance to wheel
-const double OdomSideOffset = 5.0; //distance from center of robot to side odometry wheel
+const float wheelDiam = 2.75;
+const float OdomDiam = 2; //odometry wheel diameter in inches
+const float LeftOdomFrontOffset = 5.0; // tracking center distance to wheel
+const float RightOdomFrontOffset = 5.0; // tracking center distance to wheel
+const float OdomSideOffset = 5.0; //distance from center of robot to side odometry wheel
 
-const double wheelToMotorRatio = 36.0/48;
+const float wheelToMotorRatio = 36.0/48;
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable

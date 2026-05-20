@@ -7,5 +7,5 @@
 // MoveTimePID(TestPara, motor speed, time traveled (sec), time to full speed, heading, false);
 
 void odomtest() { //Odom Test 
-    SetPos(0, 0, 0);
+
 }

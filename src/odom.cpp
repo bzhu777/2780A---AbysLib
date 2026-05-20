@@ -16,28 +16,27 @@ using namespace vex;
 
 //ODOM VARIABLES
 
-double Xpos=0;
-double Ypos=0;
-double prevTrackingFrontLeft=0;
-double prevTrackingFrontRight=0;
-double prevTrackingSide=0;
-double prevHDG=0;
-double HDG=0;
-double prevX=0;
-double prevY=0;
+float Xpos=0;
+float Ypos=0;
+float prevTrackingFrontLeft=0;
+float prevTrackingFrontRight=0;
+float prevTrackingSide=0;
+float prevHDG=0;
+float HDG=0;
+float prevX=0;
+float prevY=0;
+float ABSorientation=0;
 
+const float invTrackWidth = 1.0 / (RightOdomFrontOffset + LeftOdomFrontOffset);
+const float OffsetAVG = (LeftOdomFrontOffset + RightOdomFrontOffset) * 0.5;
 
-/** Sets the position to 0 */
-void OdomZeroing() {
-  SetPos(0,0,0);
-}
 
 /** Sets the position
  * @param X the wanted x position to set to
  * @param Y the wanted y position to set to
  * @param HDG the wanted heading to set to
  */
-void SetPos(double X, double Y, double HDG)
+void SetPos(float X, float Y, float HDG)
 {
   odomUpdate=false;
   Xpos=X;
@@ -53,55 +52,56 @@ void SetPos(double X, double Y, double HDG)
   odomUpdate=true;
 }
 
+/** Sets the position to 0 */
+void OdomZeroing() {
+  SetPos(0,0,0);
+}
 
 void UpdatePos(void) {
   OdomDeltaSet movement = OdomGetDistTravelled();
-  double dFL = movement.DeltaTrackingFrontLeft;
-  double dFR = movement.DeltaTrackingFrontRight;
-  double dS = movement.DeltaTrackingSide;
 
-  double invTrackWidth = 1.0 / (RightOdomFrontOffset + LeftOdomFrontOffset);
-  double Theta = (dFL - dFR) * invTrackWidth;
+  float dFL = movement.DeltaTrackingFrontLeft;
+  float dFR = movement.DeltaTrackingFrontRight;
+  float dS  = movement.DeltaTrackingSide;
 
-  double MovementAVG = (dFL + dFR) * 0.5;
-  double OffsetAVG = (LeftOdomFrontOffset + RightOdomFrontOffset) * 0.5;
-  double OrientationAVG = prevHDG + Theta * 0.5;
 
-  double DisplacementX;
-  double DisplacementY;
+  float Theta = (dFL - dFR) * invTrackWidth;
+  float ABSorientation = prevHDG + Theta * 57.29577951308232; // Convert to degrees
 
-  if (fabs(Theta) < 1e-6)
+
+  float MovementAVG = (dFL + dFR) * 0.5;
+  float OrientationAVG = prevHDG + Theta * 0.5;
+
+  float DisplacementX;
+  float DisplacementY;
+
+if (fabs(Theta) < 1e-5)
 {
     DisplacementX = dS;
     DisplacementY = MovementAVG;
 }
 else
 {
-    double halfTheta = Theta * 0.5;
-    double sinHalfTheta = sin(halfTheta);
-    double commonFactor = 2.0 * sinHalfTheta / Theta;
+    float halfTheta = Theta * 0.5;
+    float sinHalfTheta = sin(halfTheta);
+    float commonFactor = (2.0 * sinHalfTheta) / Theta;
 
     DisplacementX = commonFactor * (dS + Theta * OdomSideOffset);
     DisplacementY = commonFactor * (MovementAVG + Theta * OffsetAVG);
 }
 
-double r = sqrt(DisplacementX * DisplacementX + DisplacementY * DisplacementY);
-double robotAngle = atan2(DisplacementY, DisplacementX);
+float cosO = cos(OrientationAVG);
+float sinO = sin(OrientationAVG);
 
-double angleOffset = robotAngle - OrientationAVG;
-double cosAO = cos(angleOffset);
-double sinAO = sin(angleOffset);
+float globalX = DisplacementX * cosO - DisplacementY * sinO;
+float globalY = DisplacementX * sinO + DisplacementY * cosO;
 
-double DisplacementABS[2] = { r * cosAO, r * sinAO };
-
-Xpos = prevX + DisplacementABS[0];
-Ypos = prevY + DisplacementABS[1];
+Xpos = prevX + globalX;
+Ypos = prevY + globalY;
 
 prevHDG = ABSorientation;
 prevX = Xpos;
 prevY = Ypos;
-
-std::cout << Xpos << ", " << Ypos << ", " << ABSorientation << std::endl;
 }
 
 
@@ -158,8 +158,8 @@ void TurnToAngle(PIDDataSet KVals,double DeltaAngle,double TE, bool brake){
   else CStop();
 }
 
-void TurnToPoint(PIDDataSet KVals,double Xval, double Yval,double TE, bool brake){
-  double TargetAngle = atan2(Yval-Ypos, Xval-Xpos) * 180 / M_PI;
+void TurnToPoint(PIDDataSet KVals,float Xval, float Yval,float TE, bool brake){
+  float TargetAngle = atan2(Yval-Ypos, Xval-Xpos) * 180 / M_PI;
   double CSpeed=0;
   double PVal=0;
   double IVal=0;

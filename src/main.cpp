@@ -367,6 +367,7 @@ void usercontrol(void) {
     task Dtask=task(DriveTask);
     task Atask=task(ATask);
     task Ptask=task(PTask);
+    task Odomtask=task(OdomTask);
     
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
