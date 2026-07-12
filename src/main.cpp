@@ -14,6 +14,7 @@
 #include "movement.hpp"
 #include "routes/routes.hpp"
 
+
 using namespace vex;
 
 // A global instance of competition
@@ -48,6 +49,7 @@ void pre_auton(void) {
   Scraper.set(false);
   Wing.set(false);
   NeutralScore();
+
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 Gyro.calibrate();
