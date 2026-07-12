@@ -67,7 +67,7 @@ int firstRight = 0;
 
 
 
-void MPCmove(double goalX, double goalY)
+void MPCmove(double goalX, double goalY, bool brake)
 {
     ofstream MPCdebug("MPCdebug.txt");
     error = sqrt((Xpos-goalX)*(Xpos-goalX) + (Ypos-goalY)*(Ypos-goalY));
@@ -235,4 +235,11 @@ void MPCmove(double goalX, double goalY)
 
     MPCdebug << "Best Control: " << bestControl[0] << " " << bestControl[1] << " " << "Best Cost: " << bestCost << endl;
     MPCdebug.close();
+
+    if (brake) {
+        BStop();
+    }
+    else {
+        CStop();
+    }
 }

@@ -77,6 +77,7 @@ extern void TurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, bool br
 extern void TurnToAngle(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
 extern void TurnToPoint(PIDDataSet KVals,double Xval, double Yval,double TE, bool brake);
 extern void predictFutureState(double goalX, double goalY);
+extern void MPCmove(double goalX, double goalY, bool brake);
 void MaxTimePIDTurnOneSide(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
 void MoveTimePID(PIDDataSet KVals, int Speed, double TE,double AccT,double ABSHDG, bool brake);
 
