@@ -322,22 +322,24 @@ int ButtonPressingB,BTaskActiv;
 
 int PTask(void)
 {
-    // while(true)
-    // {
-    //   //---------------------------------------------------------------------- SCRAPER CONTROL
-    // if(DownTaskActiv==0&&Controller1.ButtonDown.pressing()&&ButtonPressingDown==0)
-    // {
-    //   ButtonPressingDown=1;
-    //   DownTaskActiv=1;
-    // }
+    while(true)
+    {
+    //---------------------------------------------------------------------- CLAW CONTROL
+    if(DownTaskActiv==0&&Controller1.ButtonDown.pressing()&&ButtonPressingDown==0)
+    {
+      ButtonPressingDown=1;
+      DownTaskActiv=1;
+      Claw.set(true);
+    }
 
-    // else if(!Controller1.ButtonDown.pressing())ButtonPressingDown=0;
+    else if(!Controller1.ButtonDown.pressing())ButtonPressingDown=0;
 
-    // else if(DownTaskActiv==1&&Controller1.ButtonDown.pressing()&&ButtonPressingDown==0)
-    // {
-    //   ButtonPressingDown=1;
-    //   DownTaskActiv=0;
-    // }
+    else if(DownTaskActiv==1&&Controller1.ButtonDown.pressing()&&ButtonPressingDown==0)
+    {
+      ButtonPressingDown=1;
+      DownTaskActiv=0;
+      Claw.set(false);
+    }
     // //------------------------------------------------------------------------ WING CONTROL
     // if(BTaskActiv==0&&Controller1.ButtonB.pressing()&&ButtonPressingB==0)
     // {
@@ -355,7 +357,7 @@ int PTask(void)
 
     
 
-  //}
+  }
   return 0;
 }
 /*---------------------------------------------------------------------------*/

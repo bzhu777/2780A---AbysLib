@@ -13,7 +13,7 @@ extern motor RB;
 extern motor Intake1;
 extern motor ChainBar;
 extern motor Lift;
-extern digital_out Redirect1;
+extern digital_out Claw;
 extern inertial Gyro;
 extern rotation xROdom;
 extern rotation xLOdom;
