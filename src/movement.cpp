@@ -152,23 +152,21 @@ RB.stop();
 void RunRoller(int val)
 {
 Intake1.setMaxTorque(100,percent);
-Intake2.setMaxTorque(100,percent);
 Intake1.spin(forward,(double)val/100.0*12,volt);
-Intake2.spin(forward,(double)val/100.0*12, volt);
 }
 
-void MiddleScore()
+void RunChainbar(int val)
 {
-  Redirect1.set(false);
+ChainBar.setMaxTorque(100,percent);
+ChainBar.spin(forward,(double)val/100.0*12,volt);
 }
-void NeutralScore()
+
+void SpinLift(int val)
 {
-  Redirect1.set(false);
+Lift.setMaxTorque(100,percent);
+Lift.spin(forward,(double)val/100.0*12,volt);
 }
-void HighScore()
-{
-  Redirect1.set(true);
-}
+
 
 int PrevE;//Error at t-1
 

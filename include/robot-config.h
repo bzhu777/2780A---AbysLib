@@ -11,15 +11,14 @@ extern motor RM;
 extern motor LB;
 extern motor RB;
 extern motor Intake1;
-extern motor Intake2;
-extern digital_out Wing;
+extern motor ChainBar;
+extern motor Lift;
 extern digital_out Redirect1;
-extern digital_out Storing;
-extern digital_out Scraper;
 extern inertial Gyro;
 extern rotation xROdom;
 extern rotation xLOdom;
 extern rotation yOdom;
+extern rotation chainbar;
 extern aivision Resetter;
 
 extern const float wheelDiam;

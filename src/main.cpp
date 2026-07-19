@@ -37,6 +37,9 @@ bool SP;
 bool EXIT;
 bool odomUpdate;
 int OdomTask();
+float LiftLimit;
+
+
 
 void pre_auton(void) {
    EXIT= false; // change to "FALSE" for comp
@@ -46,9 +49,12 @@ void pre_auton(void) {
   SideVal=0; //always keep at 0
   odomUpdate=true;
   SP=false;
-  Scraper.set(false);
-  Wing.set(false);
-  NeutralScore();
+
+  ChainBar.setStopping(coast);
+  chainbar.resetPosition();
+  Lift.setStopping(hold);
+  Lift.resetPosition();
+  LiftLimit = Lift.position(degrees);
 
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
@@ -268,36 +274,45 @@ int V;
 //------------------------------------------------------------------------ INTAKE MECH CONTROL
 int ATask(void)
 {
-  if (Controller1.ButtonR2.pressing()==1) // middle goal
+  if (Controller1.ButtonX.pressing()==1) // middle goal
     {
-      RunRoller(100);
-      Redirect1.set(false);
-      Storing.set(false);
+      if (Lift.position(degrees) <= LiftLimit) {
+        SpinLift(0);
+      }
+      else
+      {
+        SpinLift(-100);
+      }
     }
     else if (Controller1.ButtonL2.pressing()==1) // outtake
     {
       RunRoller(-100);
     }
-    else if (Controller1.ButtonR1.pressing()==1) // high goal
+    else if (Controller1.ButtonR1.pressing()==1)
     {
-      RunRoller(100);
-      Redirect1.set(true);
-      Storing.set(false);
+      RunChainbar(-60);
+    }
+    else if (Controller1.ButtonR2.pressing()==1)
+    {
+      RunChainbar(60);
+    }
+    else if (Controller1.ButtonB.pressing()==1) // intake
+    {
+      SpinLift(100);
     }
     else if (Controller1.ButtonL1.pressing()==1) // storing
     {
       RunRoller(100);
-      Storing.set(true);
-      Redirect1.set(true);
     }
     else if (Controller1.ButtonUp.pressing()==1) // middle goal
     {
       RunRoller(50);
-      Storing.set(false);
     }
     else
     {
       RunRoller(0);
+      SpinLift(0);
+      RunChainbar(0);
     }
   return 0;
 }
@@ -307,44 +322,40 @@ int ButtonPressingB,BTaskActiv;
 
 int PTask(void)
 {
-    while(true)
-    {
-      //---------------------------------------------------------------------- SCRAPER CONTROL
-    if(DownTaskActiv==0&&Controller1.ButtonDown.pressing()&&ButtonPressingDown==0)
-    {
-      ButtonPressingDown=1;
-      DownTaskActiv=1;
-      Scraper.set(true);
-    }
+    // while(true)
+    // {
+    //   //---------------------------------------------------------------------- SCRAPER CONTROL
+    // if(DownTaskActiv==0&&Controller1.ButtonDown.pressing()&&ButtonPressingDown==0)
+    // {
+    //   ButtonPressingDown=1;
+    //   DownTaskActiv=1;
+    // }
 
-    else if(!Controller1.ButtonDown.pressing())ButtonPressingDown=0;
+    // else if(!Controller1.ButtonDown.pressing())ButtonPressingDown=0;
 
-    else if(DownTaskActiv==1&&Controller1.ButtonDown.pressing()&&ButtonPressingDown==0)
-    {
-      ButtonPressingDown=1;
-      DownTaskActiv=0;
-      Scraper.set(false);
-    }
-    //------------------------------------------------------------------------ WING CONTROL
-    if(BTaskActiv==0&&Controller1.ButtonB.pressing()&&ButtonPressingB==0)
-    {
-      ButtonPressingB=1;
-      BTaskActiv=1;
-      Wing.set(true);
-    }
-    else if(!Controller1.ButtonB.pressing())ButtonPressingB=0;
+    // else if(DownTaskActiv==1&&Controller1.ButtonDown.pressing()&&ButtonPressingDown==0)
+    // {
+    //   ButtonPressingDown=1;
+    //   DownTaskActiv=0;
+    // }
+    // //------------------------------------------------------------------------ WING CONTROL
+    // if(BTaskActiv==0&&Controller1.ButtonB.pressing()&&ButtonPressingB==0)
+    // {
+    //   ButtonPressingB=1;
+    //   BTaskActiv=1;
+    // }
+    // else if(!Controller1.ButtonB.pressing())ButtonPressingB=0;
 
-    else if(BTaskActiv==1&&Controller1.ButtonB.pressing()&&ButtonPressingB==0)
-    {
-      ButtonPressingB=1;
-      BTaskActiv=0;
-      Wing.set(false);
-    }
+    // else if(BTaskActiv==1&&Controller1.ButtonB.pressing()&&ButtonPressingB==0)
+    // {
+    //   ButtonPressingB=1;
+    //   BTaskActiv=0;
+    // }
     
 
     
 
-  }
+  //}
   return 0;
 }
 /*---------------------------------------------------------------------------*/
