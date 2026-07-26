@@ -40,7 +40,6 @@ int OdomTask();
 float LiftLimit;
 
 
-
 void pre_auton(void) {
    EXIT= false; // change to "FALSE" for comp
   PX=0;
@@ -50,7 +49,7 @@ void pre_auton(void) {
   odomUpdate=true;
   SP=false;
 
-  ChainBar.setStopping(coast);
+  ChainBar.setStopping(brake);
   chainbar.resetPosition();
   Lift.setStopping(hold);
   Lift.resetPosition();

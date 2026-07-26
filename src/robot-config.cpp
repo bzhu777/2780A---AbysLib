@@ -17,6 +17,7 @@ motor RM = motor(PORT16, ratio18_1, true);
 motor RB = motor(PORT17, ratio6_1, true);
 motor Intake1 = motor(PORT21, ratio6_1, false);
 motor ChainBar = motor(PORT10, ratio18_1, false);
+
 motor Lift = motor(PORT14, ratio36_1, false);
 
 digital_out Claw = digital_out(Brain.ThreeWirePort.A);
