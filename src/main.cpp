@@ -13,6 +13,7 @@
 #include "screen_gui.hpp"
 #include "movement.hpp"
 #include "routes/routes.hpp"
+#include "lift_display.hpp"
 
 
 using namespace vex;
@@ -154,6 +155,10 @@ Brain.Screen.print("AUTO CONFIRMED");
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
+}
+
+void startLiftDisplayTask() {
+  task liftDisplayTask = task(LiftDisplayTask);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -371,6 +376,8 @@ int PTask(void)
 
 void usercontrol(void) {
   EXIT=true;//Force Exit Autosel once drivercontrol began.
+  startLiftDisplayTask();
+
   // User control code here, inside the loop
   while (1) {
     // This is the main execution loop for the user control program.
