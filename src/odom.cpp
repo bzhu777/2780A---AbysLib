@@ -131,11 +131,9 @@ OdomDeltaSet OdomGetDistTravelled()
 
 void TurnToAngle(PIDDataSet KVals,double DeltaAngle,double TE, bool brake){
   double CSpeed=0;
-  double PVal=0;
-  double IVal=0;
-  double DVal=0; 
   double LGV=0;
-  PrevE=0;
+  double integral = 0.0;
+  double prevError = 0.0;
   double Correction=0;
   Brain.Timer.reset();
 
@@ -143,15 +141,10 @@ void TurnToAngle(PIDDataSet KVals,double DeltaAngle,double TE, bool brake){
   {
     LGV = DeltaAngle - ABSorientation;
     if(LGV>180) LGV=LGV-360;
-    PVal=KVals.kp*LGV;
-    IVal=IVal+KVals.ki*LGV*0.02;
-    DVal=KVals.kd*(LGV-PrevE);
+    Correction = ComputePID(KVals, LGV, integral, prevError, 0.02);
 
-  Correction=PVal+IVal+DVal/0.02;
-
-  Move(CSpeed-Correction,CSpeed+Correction);
-  PrevE=LGV;
-  wait(20, msec);
+    Move(CSpeed-Correction,CSpeed+Correction);
+    wait(20, msec);
   }
   if(brake){BStop();
   wait(180,msec);}
@@ -161,11 +154,9 @@ void TurnToAngle(PIDDataSet KVals,double DeltaAngle,double TE, bool brake){
 void TurnToPoint(PIDDataSet KVals,float Xval, float Yval,float TE, bool brake){
   float TargetAngle = atan2(Yval-Ypos, Xval-Xpos) * 180 / M_PI;
   double CSpeed=0;
-  double PVal=0;
-  double IVal=0;
-  double DVal=0; 
   double LGV=0;
-  PrevE=0;
+  double integral = 0.0;
+  double prevError = 0.0;
   double Correction=0;
   Brain.Timer.reset();
 
@@ -173,15 +164,10 @@ void TurnToPoint(PIDDataSet KVals,float Xval, float Yval,float TE, bool brake){
   {
     LGV = TargetAngle - ABSorientation;
     if(LGV>180) LGV=LGV-360;
-    PVal=KVals.kp*LGV;
-    IVal=IVal+KVals.ki*LGV*0.02;
-    DVal=KVals.kd*(LGV-PrevE);
+    Correction = ComputePID(KVals, LGV, integral, prevError, 0.02);
 
-  Correction=PVal+IVal+DVal/0.02;
-
-  Move(CSpeed-Correction,CSpeed+Correction);
-  PrevE=LGV;
-  wait(20, msec);
+    Move(CSpeed-Correction,CSpeed+Correction);
+    wait(20, msec);
   }
   if(brake){BStop();
   wait(180,msec);}

@@ -43,12 +43,6 @@ struct ChassisDataSet{
   float HDG;   // Robot heading
 };
 
-struct PIDDataSet{
-  double kp;
-  double ki;
-  double kd;
-};
-
 //ODOM FUNCTIONS
 
 extern void OdomZeroing(void);
@@ -59,7 +53,6 @@ extern OdomDataSet OdomUpdate();
 
 //PID FUNCTIONS
 
-extern PIDDataSet TestPara;
 extern void Zeroing(bool dist, bool HDG);
 extern ChassisDataSet ChassisUpdate();
 extern OdomDataSet OdomUpdate();
@@ -70,15 +63,8 @@ extern void CStop();
 extern void RunRoller(int val);
 extern void SpinLift(int val);
 extern void RunChainbar(int val);
-extern int PrevE;
-extern void MoveEncoderPID(PIDDataSet KVals, int Speed, double dist,double AccT, double ABSHDG,bool brake);
-extern void TurnMaxTimePID(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
-extern void TurnToAngle(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
-extern void TurnToPoint(PIDDataSet KVals,double Xval, double Yval,double TE, bool brake);
 extern void predictFutureState(double goalX, double goalY);
 extern void MPCmove(double goalX, double goalY, bool brake);
-void MaxTimePIDTurnOneSide(PIDDataSet KVals,double DeltaAngle,double TE, bool brake);
-void MoveTimePID(PIDDataSet KVals, int Speed, double TE,double AccT,double ABSHDG, bool brake);
 
 
 #endif

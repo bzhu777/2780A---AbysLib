@@ -39,6 +39,9 @@ bool EXIT;
 bool odomUpdate;
 int OdomTask();
 float LiftLimit;
+int ChainbarHomePosition = 0;
+int ChainbarState = 0;
+bool ChainbarTogglePressed = false;
 
 
 void pre_auton(void) {
@@ -50,10 +53,12 @@ void pre_auton(void) {
   odomUpdate=true;
   SP=false;
 
-  ChainBar.setStopping(brake);
+  ChainBar.setStopping(hold);
   chainbar.resetPosition();
+  ChainbarHomePosition = static_cast<int>(round(ChainBar.position(degrees)));
   Lift.setStopping(hold);
   Lift.resetPosition();
+  Lift.setPosition(100, degrees);
   LiftLimit = Lift.position(degrees);
 
   // Initializing Robot Configuration. DO NOT REMOVE!
@@ -324,25 +329,66 @@ int ATask(void)
 int ButtonPressingDown,DownTaskActiv;
 int ButtonPressingB,BTaskActiv;
 
+void MoveChainbarToPosition(int targetPosition)
+{
+  int currentPosition = static_cast<int>(round(ChainBar.position(degrees)));
+  int error = targetPosition - currentPosition;
+
+  if (abs(error) < 5) {
+    ChainBar.stop();
+    return;
+  }
+
+  int power = error / 8;
+  if (power > 100) power = 100;
+  if (power < -100) power = -100;
+
+  ChainBar.setMaxTorque(100, percent);
+  if (power > 0) {
+    ChainBar.spin(forward, (double)power / 100.0 * 12.0, volt);
+  } else {
+    ChainBar.spin(reverse, (double)(-power) / 100.0 * 12.0, volt);
+  }
+}
+
 int PTask(void)
 {
     while(true)
     {
     //---------------------------------------------------------------------- CLAW CONTROL
-    if(DownTaskActiv==0&&Controller1.ButtonDown.pressing()&&ButtonPressingDown==0)
+    if(Controller1.ButtonA.pressing() && !ButtonPressingDown)
     {
       ButtonPressingDown=1;
-      DownTaskActiv=1;
-      Claw.set(true);
+      DownTaskActiv = !DownTaskActiv;
+      Claw.set(DownTaskActiv);
+    }
+    else if(!Controller1.ButtonA.pressing())
+    {
+      ButtonPressingDown=0;
     }
 
-    else if(!Controller1.ButtonDown.pressing())ButtonPressingDown=0;
+    if (Controller1.ButtonY.pressing() && !ChainbarTogglePressed) {
+      ChainbarTogglePressed = true;
+      ChainbarState = (ChainbarState + 1) % 3;
+    }
+    else if (!Controller1.ButtonY.pressing()) {
+      ChainbarTogglePressed = false;
+    }
 
-    else if(DownTaskActiv==1&&Controller1.ButtonDown.pressing()&&ButtonPressingDown==0)
-    {
-      ButtonPressingDown=1;
-      DownTaskActiv=0;
-      Claw.set(false);
+    if (Controller1.ButtonR1.pressing()) {
+      RunChainbar(60);
+    }
+    else if (Controller1.ButtonR2.pressing()) {
+      RunChainbar(-60);
+    }
+    else if (ChainbarState == 0) {
+      MoveChainbarToPosition(ChainbarHomePosition);
+    }
+    else if (ChainbarState == 1) {
+      MoveChainbarToPosition(-835);
+    }
+    else {
+      MoveChainbarToPosition(-990);
     }
     // //------------------------------------------------------------------------ WING CONTROL
     // if(BTaskActiv==0&&Controller1.ButtonB.pressing()&&ButtonPressingB==0)

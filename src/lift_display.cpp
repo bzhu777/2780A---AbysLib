@@ -5,22 +5,14 @@
 #include <math.h>
 
 int LiftDisplayCounter = 0;
-double lastLiftPosition = 0.0;
+int ChainbarDisplayCounter = 0;
 
 void ResetLiftDisplayCounter() {
-  lastLiftPosition = Lift.position(degrees);
-  LiftDisplayCounter = 0;
+  LiftDisplayCounter = static_cast<int>(round(Lift.position(degrees)));
 }
 
 void UpdateLiftDisplayCounter() {
-  double currentPosition = Lift.position(degrees);
-  double delta = currentPosition - lastLiftPosition;
-  int deltaSteps = static_cast<int>(round(delta));
-
-  if (deltaSteps != 0) {
-    LiftDisplayCounter += deltaSteps;
-    lastLiftPosition = currentPosition;
-  }
+  LiftDisplayCounter = static_cast<int>(round(Lift.position(degrees)));
 }
 
 void DrawLiftDisplayCounter() {
@@ -34,12 +26,34 @@ void DrawLiftDisplayCounter() {
   Brain.Screen.print(" deg");
 }
 
+void ResetChainbarDisplayCounter() {
+  ChainbarDisplayCounter = static_cast<int>(round(ChainBar.position(degrees)));
+}
+
+void UpdateChainbarDisplayCounter() {
+  ChainbarDisplayCounter = static_cast<int>(round(ChainBar.position(degrees)));
+}
+
+void DrawChainbarDisplayCounter() {
+  Brain.Screen.setFont(monoM);
+  Brain.Screen.setPenColor(white);
+  Brain.Screen.setCursor(3, 1);
+  Brain.Screen.print("Chainbar Count:            ");
+  Brain.Screen.setCursor(3, 1);
+  Brain.Screen.print("Chainbar Count: ");
+  Brain.Screen.print(ChainbarDisplayCounter);
+  Brain.Screen.print(" deg");
+}
+
 int LiftDisplayTask() {
   ResetLiftDisplayCounter();
+  ResetChainbarDisplayCounter();
 
   while (true) {
     UpdateLiftDisplayCounter();
+    UpdateChainbarDisplayCounter();
     DrawLiftDisplayCounter();
+    DrawChainbarDisplayCounter();
     wait(20, msec);
   }
 
