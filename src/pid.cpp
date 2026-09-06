@@ -10,6 +10,7 @@ int PrevE;
 
 double ComputePID(PIDDataSet KVals, double error, double &integral, double &prevError, double deltaTime)
 {
+    return false;
 }
 
 void MoveEncoderPID(PIDDataSet KVals, int Speed, double dist, double AccT, double ABSHDG, bool brake)

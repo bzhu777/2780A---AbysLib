@@ -10,8 +10,7 @@ extern int JX;
 //ODOM VARIABLES
 
 extern float TrackingFront;
-extern float prevTrackingFrontLeft;
-extern float prevTrackingFrontRight;
+extern float prevTrackingFront;
 extern float TrackingSide;
 extern float prevTrackingSide;
 extern float Xpos;
@@ -24,14 +23,12 @@ extern const float  invTrackWidth;
 extern const float  OffsetAVG;
 
 struct OdomDataSet{
-  float CurrTrackingFrontLeft;
-  float CurrTrackingFrontRight;
+  float CurrTrackingFront;
   float CurrTrackingSide;
 };
 
 struct OdomDeltaSet{
-  float DeltaTrackingFrontLeft;
-  float DeltaTrackingFrontRight;
+  float DeltaTrackingFront;
   float DeltaTrackingSide;
 };
 

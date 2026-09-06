@@ -8,7 +8,6 @@
 // MoveTimePID(TestPara, motor speed, time traveled (sec), time to full speed, heading, false);
 
 void auto10() { //left, long goal 7, with wing
-    PIDDataSet TestPara{2.5,0.14,0.2};
 
     
 

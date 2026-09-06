@@ -1,3 +1,4 @@
+#pragma once
 using namespace vex;
 
 extern brain Brain;
@@ -15,11 +16,12 @@ extern motor ChainBar;
 extern motor Lift;
 extern digital_out Claw;
 extern inertial Gyro;
-extern rotation xROdom;
-extern rotation xLOdom;
+extern rotation xOdom;
 extern rotation yOdom;
 extern rotation chainbar;
 extern aivision Resetter;
+
+inertial pengoinn = inertial(PORT12, turnType::right);
 
 extern const float wheelDiam;
 extern const float wheelToMotorRatio;

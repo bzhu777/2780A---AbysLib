@@ -8,7 +8,6 @@
 
 void left34wing() { //left, long goal 3, mid goal 4, with wing
 
-    PIDDataSet TestPara{2.5,0.14,0.2};
 
     
 

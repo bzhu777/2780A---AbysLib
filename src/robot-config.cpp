@@ -1,4 +1,5 @@
 #include "vex.h"
+#include "robot-config.h"
 
 using namespace vex;
 using signature = vision::signature;
@@ -21,10 +22,9 @@ motor ChainBar = motor(PORT10, ratio18_1, false);
 motor Lift = motor(PORT14, ratio36_1, false);
 
 digital_out Claw = digital_out(Brain.ThreeWirePort.A);
-inertial Gyro = inertial(PORT5);
+inertial pengoinn = inertial(PORT12, turnType::right);
 rotation chainbar = rotation(PORT9);
-rotation xROdom = rotation(PORT3);
-rotation xLOdom = rotation(PORT4);
+rotation xOdom = rotation(PORT3);
 rotation yOdom = rotation(PORT4);
 aivision Resetter = aivision(PORT6, aivision::ALL_TAGS);
 
