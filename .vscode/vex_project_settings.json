@@ -1,8 +1,8 @@
 {
 	"project": {
-		"name": "3150N--Pushback--S-bot",
+		"name": "AbyssLib",
 		"slot": 2,
-		"description": "Empty V5 C++ Project",
+		"description": "2780A's Library for VEX Robotics",
 		"platform": "V5",
 		"creationDate": "Mon, 26 Jan 2026 00:45:46 GMT",
 		"language": "cpp",
