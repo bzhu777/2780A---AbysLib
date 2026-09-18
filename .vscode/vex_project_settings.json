@@ -1,7 +1,7 @@
 {
 	"project": {
 		"name": "AbyssLib",
-		"slot": 2,
+		"slot": 1,
 		"description": "2780A's Library for VEX Robotics",
 		"platform": "V5",
 		"creationDate": "Mon, 26 Jan 2026 00:45:46 GMT",

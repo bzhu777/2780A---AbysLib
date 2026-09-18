@@ -154,6 +154,8 @@ void RunRoller(int val)
 {
 Intake1.setMaxTorque(100,percent);
 Intake1.spin(forward,(double)val/100.0*12,volt);
+Intake2.setMaxTorque(100,percent);
+Intake2.spin(forward,(double)val/100.0*12,volt);
 }
 
 void RunChainbar(int val)

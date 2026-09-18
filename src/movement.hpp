@@ -20,7 +20,6 @@ extern float prevHDGpos;
 extern float ABSorientation;
 
 extern const float  invTrackWidth;
-extern const float  OffsetAVG;
 
 struct OdomDataSet{
   float CurrTrackingFront;

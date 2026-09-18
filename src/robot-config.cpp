@@ -10,23 +10,24 @@ brain  Brain;
 
 // VEXcode device constructors
 controller Controller1 = controller(primary);
-motor LF = motor(PORT18, ratio6_1, false);
-motor LM = motor(PORT19, ratio18_1, false);
-motor LB = motor(PORT20, ratio6_1, false);
-motor RF = motor(PORT15, ratio6_1, true);
-motor RM = motor(PORT16, ratio18_1, true);
-motor RB = motor(PORT17, ratio6_1, true);
-motor Intake1 = motor(PORT21, ratio6_1, false);
-motor ChainBar = motor(PORT10, ratio18_1, false);
+motor LF = motor(PORT1, ratio6_1, false);
+motor LM = motor(PORT1, ratio18_1, false);
+motor LB = motor(PORT1, ratio6_1, false);
+motor RF = motor(PORT1, ratio6_1, true);
+motor RM = motor(PORT1, ratio18_1, true);
+motor RB = motor(PORT1, ratio6_1, true);
+motor Intake1 = motor(PORT10, ratio6_1, true);
+motor Intake2 = motor(PORT21, ratio6_1, true);
+motor ChainBar = motor(PORT1, ratio18_1, false);
 
-motor Lift = motor(PORT14, ratio36_1, false);
+motor Lift = motor(PORT1, ratio36_1, false);
 
 digital_out Claw = digital_out(Brain.ThreeWirePort.A);
-inertial pengoinn = inertial(PORT12, turnType::right);
-rotation chainbar = rotation(PORT9);
-rotation xOdom = rotation(PORT3);
-rotation yOdom = rotation(PORT4);
-aivision Resetter = aivision(PORT6, aivision::ALL_TAGS);
+inertial Gyro = inertial(PORT1, turnType::right);
+rotation chainbar = rotation(PORT1);
+rotation xOdom = rotation(PORT1);
+rotation yOdom = rotation(PORT1);
+aivision Resetter = aivision(PORT1, aivision::ALL_TAGS);
 
 //Naming convention: 
 // Important variables

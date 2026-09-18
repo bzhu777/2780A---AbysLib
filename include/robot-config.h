@@ -12,16 +12,16 @@ extern motor RM;
 extern motor LB;
 extern motor RB;
 extern motor Intake1;
+extern motor Intake2;
 extern motor ChainBar;
 extern motor Lift;
 extern digital_out Claw;
-extern inertial Gyro;
 extern rotation xOdom;
 extern rotation yOdom;
 extern rotation chainbar;
 extern aivision Resetter;
 
-inertial pengoinn = inertial(PORT12, turnType::right);
+extern inertial Gyro;
 
 extern const float wheelDiam;
 extern const float wheelToMotorRatio;

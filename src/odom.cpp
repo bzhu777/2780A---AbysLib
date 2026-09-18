@@ -59,7 +59,7 @@ void UpdatePos(void) {
   float dS  = movement.DeltaTrackingSide;
 
 
-  float ABSorientation = pengoinn.heading()*M_PI/180.0;
+  float ABSorientation = Gyro.heading()*M_PI/180.0;
   float Theta = ABSorientation - prevHDG;
 
 
@@ -81,7 +81,7 @@ else
     float commonFactor = (2.0 * sinHalfTheta) / Theta;
 
     DisplacementX = commonFactor * (dS + Theta * OdomSideOffset);
-    DisplacementY = commonFactor * (MovementAVG + Theta * OffsetAVG);
+    DisplacementY = commonFactor * (MovementAVG + Theta * OdomSideOffset);
 }
 
 float cosO = cos(OrientationAVG);

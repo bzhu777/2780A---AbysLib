@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
-/*    Author:       Bryan Zhu                                                 */
+/*    Author:       Bryan Zhu , Percy Xing                                    */
 /*    Created:      Sun Apr 05 2026                                           */
 /*    Description:                                                            */
 /*                                                                            */
@@ -285,37 +285,37 @@ int ATask(void)
 {
   if (Controller1.ButtonX.pressing()==1) // middle goal
     {
-      if (Lift.position(degrees) <= LiftLimit) {
-        SpinLift(0);
-      }
-      else
-      {
-        SpinLift(-100);
-      }
+      // if (Lift.position(degrees) <= LiftLimit) {
+      //   SpinLift(0);
+      // }
+      // else
+      // {
+      //   SpinLift(-100);
+      // }
     }
-    else if (Controller1.ButtonL2.pressing()==1) // outtake
-    {
-      RunRoller(-100);
-    }
-    else if (Controller1.ButtonR1.pressing()==1)
-    {
-      RunChainbar(-60);
-    }
-    else if (Controller1.ButtonR2.pressing()==1)
-    {
-      RunChainbar(60);
-    }
-    else if (Controller1.ButtonB.pressing()==1) // intake
-    {
-      SpinLift(100);
-    }
-    else if (Controller1.ButtonL1.pressing()==1) // storing
+    if (Controller1.ButtonL2.pressing()==1) // outtake
     {
       RunRoller(100);
     }
+    else if (Controller1.ButtonR1.pressing()==1)
+    {
+
+    }
+    else if (Controller1.ButtonR2.pressing()==1)
+    {
+      
+    }
+    else if (Controller1.ButtonB.pressing()==1) // intake
+    {
+
+    }
+    else if (Controller1.ButtonL1.pressing()==1) // storing
+    {
+      RunRoller(-100);
+    }
     else if (Controller1.ButtonUp.pressing()==1) // middle goal
     {
-      RunRoller(50);
+
     }
     else
     {
@@ -355,54 +355,54 @@ int PTask(void)
 {
     while(true)
     {
-    //---------------------------------------------------------------------- CLAW CONTROL
-    if(Controller1.ButtonA.pressing() && !ButtonPressingDown)
-    {
-      ButtonPressingDown=1;
-      DownTaskActiv = !DownTaskActiv;
-      Claw.set(DownTaskActiv);
-    }
-    else if(!Controller1.ButtonA.pressing())
-    {
-      ButtonPressingDown=0;
-    }
+  //   //---------------------------------------------------------------------- CLAW CONTROL
+  //   if(Controller1.ButtonA.pressing() && !ButtonPressingDown)
+  //   {
+  //     ButtonPressingDown=1;
+  //     DownTaskActiv = !DownTaskActiv;
+  //     Claw.set(DownTaskActiv);
+  //   }
+  //   else if(!Controller1.ButtonA.pressing())
+  //   {
+  //     ButtonPressingDown=0;
+  //   }
 
-    if (Controller1.ButtonY.pressing() && !ChainbarTogglePressed) {
-      ChainbarTogglePressed = true;
-      ChainbarState = (ChainbarState + 1) % 3;
-    }
-    else if (!Controller1.ButtonY.pressing()) {
-      ChainbarTogglePressed = false;
-    }
+  //   if (Controller1.ButtonY.pressing() && !ChainbarTogglePressed) {
+  //     ChainbarTogglePressed = true;
+  //     ChainbarState = (ChainbarState + 1) % 3;
+  //   }
+  //   else if (!Controller1.ButtonY.pressing()) {
+  //     ChainbarTogglePressed = false;
+  //   }
 
-    if (Controller1.ButtonR1.pressing()) {
-      RunChainbar(60);
-    }
-    else if (Controller1.ButtonR2.pressing()) {
-      RunChainbar(-60);
-    }
-    else if (ChainbarState == 0) {
-      MoveChainbarToPosition(ChainbarHomePosition);
-    }
-    else if (ChainbarState == 1) {
-      MoveChainbarToPosition(-835);
-    }
-    else {
-      MoveChainbarToPosition(-990);
-    }
-    // //------------------------------------------------------------------------ WING CONTROL
-    // if(BTaskActiv==0&&Controller1.ButtonB.pressing()&&ButtonPressingB==0)
-    // {
-    //   ButtonPressingB=1;
-    //   BTaskActiv=1;
-    // }
-    // else if(!Controller1.ButtonB.pressing())ButtonPressingB=0;
+  //   if (Controller1.ButtonR1.pressing()) {
 
-    // else if(BTaskActiv==1&&Controller1.ButtonB.pressing()&&ButtonPressingB==0)
-    // {
-    //   ButtonPressingB=1;
-    //   BTaskActiv=0;
-    // }
+  //   }
+  //   else if (Controller1.ButtonR2.pressing()) {
+
+  //   }
+  //   else if (ChainbarState == 0) {
+  //     MoveChainbarToPosition(ChainbarHomePosition);
+  //   }
+  //   else if (ChainbarState == 1) {
+  //     MoveChainbarToPosition(-835);
+  //   }
+  //   else {
+  //     MoveChainbarToPosition(-990);
+  //   }
+  //   // //------------------------------------------------------------------------ WING CONTROL
+  //   // if(BTaskActiv==0&&Controller1.ButtonB.pressing()&&ButtonPressingB==0)
+  //   // {
+  //   //   ButtonPressingB=1;
+  //   //   BTaskActiv=1;
+  //   // }
+  //   // else if(!Controller1.ButtonB.pressing())ButtonPressingB=0;
+
+  //   // else if(BTaskActiv==1&&Controller1.ButtonB.pressing()&&ButtonPressingB==0)
+  //   // {
+  //   //   ButtonPressingB=1;
+  //   //   BTaskActiv=0;
+  //   // }
     
 
     
